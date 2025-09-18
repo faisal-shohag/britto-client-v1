@@ -119,5 +119,25 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Inter", Noto Serif Bengali;
+    background-image: url("https://cdn.prod.website-files.com/6674f0cdb5b7b401612cf015/6674f0cdb5b7b401612cf065_noise-50.avif");
   }
+
+   .bg-dark-red {
+      background-image: url("https://cdn.prod.website-files.com/6674f0cdb5b7b401612cf015/6674f0cdb5b7b401612cf065_noise-50.avif"), linear-gradient(to right, #42312c, #452225);
+      background-position: 0 0, 0 0;
+      background-size: 200px, auto;
+    }
+
+    .toaster {
+      font-family: "Inter", Noto Serif Bengali !important;
+    }
+
+    .bg2 {
+      @apply dark:bg-[#222326];
+    background-image: url("https://cdn.prod.website-files.com/6674f0cdb5b7b401612cf015/6674f0cdb5b7b401612cf065_noise-50.avif");
+    background-position: 0 0;
+    background-size: 200px;
+    border-radius: 1rem;
+    overflow: hidden;
+}
 }
