@@ -1,12 +1,10 @@
 // components/exam-results/leaderboard.tsx
 import React, { useState } from "react";
-import { useExamLeaderboard } from "@/hooks/free-exam-hooks/use-leaderboard";
+import { useExamPaticipants } from "@/hooks/free-exam-hooks/use-leaderboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Progress } from "@/components/ui/progress";
 import { Trophy, Medal, Award, Clock, Crown, User } from "lucide-react";
 import { FaFaceSadTear } from "react-icons/fa6";
 
@@ -16,19 +14,20 @@ interface LeaderboardProps {
   showUserRank?: boolean;
 }
 
-export const Leaderboard: React.FC<LeaderboardProps> = ({
+export const Participants: React.FC<LeaderboardProps> = ({
   examId,
   userId,
-  showUserRank = true,
 }) => {
   const [page, setPage] = useState(1);
 
   const limit = 20;
 
-  const { data, isLoading, error } = useExamLeaderboard(examId, {
+  const { data, isLoading, error } = useExamPaticipants(examId, {
     page,
     limit,
   });
+
+
 
 
   const getRankIcon = (rank: number) => {
@@ -66,7 +65,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({
     );
   }
 
-  const { leaderboard, exam, userRank, totalPages } = data;
+  const { participants, exam, totalPages } = data;
 
   return (
     <>
@@ -81,34 +80,15 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({
         </div>
       </div>
       <div>
-        {/* User Rank (if applicable) */}
-        {showUserRank && userId && userRank && (
-          <div className="mb-6 p-4 bg-primary/10 rounded-lg">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Badge variant="outline" className="text-lg">
-                  {getRankIcon(userRank.rank)}
-                </Badge>
-                <div>
-                  <p className="font-semibold">Your Rank</p>
-                  <p className="text-sm text-muted-foreground">
-                    Score: {userRank.score} | Percentile:{" "}
-                    {userRank.percentile.toFixed(1)}%
-                  </p>
-                </div>
-              </div>
-              <Progress value={userRank.percentile} className="w-1/3" />
-            </div>
-          </div>
-        )}
+
 
         {/* Leaderboard Entries */}
         <div className="space-y-4">
-        {! leaderboard.length   && <div className="py-10 text-center flex justify-center flex-col items-center gap-3"> 
+        {! participants.length   && <div className="py-10 text-center flex justify-center flex-col items-center gap-3"> 
           <div className="text-zinc-500"><FaFaceSadTear className="h-12 w-12"/></div>
           <div className="text-lg text-zinc-700">এখনো কেউ এক্সাম দেয়নি!</div>
         </div>}
-          {leaderboard.map((entry) => (
+          {participants.map((entry) => (
             <div
               key={entry.id}
               className={`flex items-center gap-4 p-4 rounded-lg ${

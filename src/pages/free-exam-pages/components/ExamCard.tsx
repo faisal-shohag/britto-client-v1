@@ -1,13 +1,28 @@
 import { Button } from "@/components/ui/button";
-import { useUpcomingExam } from "@/hooks/free-exam-hooks/use-exams";
 import { bnNumber } from "@/lib/bnNumbers";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
-import { useEffect, useState } from "react";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
 
-const HomeExamCard = () => {
-  const { data: exam, isLoading } = useUpcomingExam();
+type Exam = {
+  id: number | string;
+  title: string;
+  startTime: string;
+  endTime: string;
+  durationInMinutes: number;
+  totalMarks: number;
+  package?: {
+    title?: string;
+  };
+};
+
+type ExamCardProps = {
+  exam: Exam;
+  loading?: boolean;
+};
+
+const ExamCard = ({ exam, loading }: ExamCardProps) => {
   const [timeLeft, setTimeLeft] = useState({
     days: "0",
     hours: "0",
@@ -27,15 +42,12 @@ const HomeExamCard = () => {
       const end = new Date(exam.endTime).getTime();
 
       if (now < start) {
-        // Upcoming
         setStatus("upcoming");
         updateCountdown(start - now);
       } else if (now >= start && now < end) {
-        // Running
         setStatus("running");
         updateCountdown(end - now);
       } else {
-        // Ended
         setStatus("ended");
         setTimeLeft({ days: "00", hours: "00", minutes: "00", seconds: "00" });
       }
@@ -62,7 +74,7 @@ const HomeExamCard = () => {
     });
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="p-5 bg-[rgba(255,255,255,0.05)] backdrop-blur-sm rounded-lg text-center border relative">
         Loading exam...
@@ -79,86 +91,65 @@ const HomeExamCard = () => {
   }
 
   return (
-    <div className="p-5 bg-white dark:bg-zinc-900 backdrop-blur-sm rounded-lg overflow-hidden text-center border relative">
-      <div className="text-xs bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl px-5 absolute -left-2 top-0">
-        {exam.package?.title}
-      </div>
+    <div className="p-5 bg-white dark:bg-zinc-900  backdrop-blur-sm rounded-lg overflow-hidden text-center border relative">
+      {exam.package?.title && (
+        <div className="text-xs bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl px-5 absolute -left-2 top-0">
+          {exam.package.title}
+        </div>
+      )}
 
       <div className="text-black text-xl font-bold dark:text-white">
         {exam.title}
       </div>
 
-      {status === "upcoming" && (
+      {status !== "ended" && (
         <>
           <div className="flex gap-2 justify-center font-bold">
-          {timeLeft.days !== "0" && <span>{bnNumber(timeLeft.days)} দিন</span>}
-            {timeLeft.hours !== "0" && <span>{bnNumber(timeLeft.hours)} ঘণ্টা</span>}
-            {timeLeft.minutes !== "0" && <span>{bnNumber(timeLeft.minutes)} মিনিট</span>}
+            {timeLeft.days !== "0" && (
+              <span>{bnNumber(timeLeft.days)} দিন</span>
+            )}
+            {timeLeft.hours !== "0" && (
+              <span>{bnNumber(timeLeft.hours)} ঘণ্টা</span>
+            )}
+            {timeLeft.minutes !== "0" && (
+              <span>{bnNumber(timeLeft.minutes)} মিনিট</span>
+            )}
             <span>{bnNumber(timeLeft.seconds)} সেকেন্ড</span>
           </div>
-          <div className="text-sm">শুরু হতে বাকি</div>
-          <Link to={`exam/${exam.id}`}>
-            <Button
-              className="mt-2 bg-gradient-to-r from-red-500 via-red-600 to-pink-500 text-white"
-              variant={"outline"}
-              size={"sm"}
-            >
-              প্রবেশ করো
-            </Button>
-          </Link>
+          <div className="text-sm">
+            {status === "upcoming" ? "শুরু হতে বাকি" : "সময় বাকি"}
+          </div>
         </>
       )}
 
       {status === "running" && (
-        <>
-          <div className="flex gap-2 justify-center">
-         {timeLeft.days !== "0" && <span>{bnNumber(timeLeft.days)} দিন</span>}
-            {timeLeft.hours !== "0" && <span>{bnNumber(timeLeft.hours)} ঘণ্টা</span>}
-            {timeLeft.minutes !== "0" && <span>{bnNumber(timeLeft.minutes)} মিনিট</span>}
-            <span>{bnNumber(timeLeft.seconds)} সেকেন্ড</span>
-          </div>
-          <div className="text-sm">সময় বাকি</div>
-           <Link to={`exam/${exam.id}`}>
-            <Button
-              className="mt-2 bg-gradient-to-r from-red-500 via-red-600 to-pink-500 text-white"
-              variant={"outline"}
-              size={"sm"}
-            >
-              প্রবেশ করো
-            </Button>
-          </Link>
-        </>
+        <Link to={`/free/playground/${exam.id}`}>
+          <Button
+            className="mt-2 bg-gradient-to-r from-red-500 via-red-600 to-pink-500 text-white"
+            variant="outline"
+            size="sm"
+          >
+            শুরু করো
+          </Button>
+        </Link>
       )}
 
       {status === "ended" && (
-        <>
         <div className="text-red-500 font-semibold text-lg">শেষ</div>
-           <Link to={`exam/${exam.id}`}>
-            <Button
-              className="mt-2 bg-gradient-to-r from-red-500 via-red-600 to-pink-500 text-white"
-              variant={"outline"}
-              size={"sm"}
-            >
-              প্রবেশ করো
-            </Button>
-          </Link>
-          </>
       )}
 
       <div className="text-sm flex justify-center gap-2 border-t-2 my-1 pt-2 border-dotted">
         <div className="flex items-center gap-1">
           <MdOutlineAccessTimeFilled /> সময়: {bnNumber(exam.durationInMinutes)}{" "}
-          মিনিট{" "}
+          মিনিট
         </div>
         <div>|</div>
         <div className="flex items-center gap-1">
-          {" "}
           <AiFillQuestionCircle /> প্রশ্ন: {bnNumber(exam.totalMarks)} টি
         </div>
-      
       </div>
     </div>
   );
 };
 
-export default HomeExamCard;
+export default ExamCard;

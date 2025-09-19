@@ -130,6 +130,9 @@ const examResultsAPI = {
   // Get exam leaderboard
   getExamLeaderboard: (examId: number, params?: { page?: number; limit?: number }) =>
     api.get(`/freeExam/exams/${examId}/leaderboard`, { params }),
+  //get participants
+  getExamParticipants : (examId: number, params?: { page?: number; limit?: number }) =>
+    api.get(`/freeExam/participants/exams/${examId}`, { params }),
   
   // Check if user can view results (exam ended)
   checkResultsAccess: (userId: number, examId: number) =>
@@ -164,6 +167,16 @@ export const useExamLeaderboard = (examId: number, params?: { page?: number; lim
     queryKey: ['exam-leaderboard', examId, params],
     queryFn: () => examResultsAPI.getExamLeaderboard(examId, params),
     select: (data) => data.data.data as LeaderboardResponse,
+    enabled: !!examId,
+    refetchInterval: 30000, // Refetch every 30 seconds for live updates
+  });
+};
+
+export const useExamPaticipants = (examId: number, params?: { page?: number; limit?: number }) => {
+  return useQuery({
+    queryKey: ['exam-particpants', examId, params],
+    queryFn: () => examResultsAPI.getExamParticipants(examId, params),
+    select: (data) => data.data.data as any,
     enabled: !!examId,
     refetchInterval: 30000, // Refetch every 30 seconds for live updates
   });

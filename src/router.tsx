@@ -18,6 +18,7 @@ import PackageExamsPage from "./pages/free-exam-pages/admin/exams/ExamByPackageI
 import QuestionByExam from "./pages/free-exam-pages/admin/questions/QuestionByExam";
 import ExamLeaderBoard from "./pages/free-exam-pages/user-exam/ExamLeaderBoard";
 import ExamAnswerSheet from "./pages/free-exam-pages/user-exam/ExamAnswerSheet";
+import ExamDetails from "./pages/free-exam-pages/user-exam/ExamDetails";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,14 @@ export const router = createBrowserRouter([
       {
         path: "login",
         Component: Login,
+      },
+         {
+        path: "exam/:id",
+        element: (
+          <FreeExamPrivateRoute>
+            <ExamDetails />
+          </FreeExamPrivateRoute>
+        ),
       },
       {
         path: "playground/:id",
