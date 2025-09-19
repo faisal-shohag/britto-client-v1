@@ -19,6 +19,8 @@ import QuestionByExam from "./pages/free-exam-pages/admin/questions/QuestionByEx
 import ExamLeaderBoard from "./pages/free-exam-pages/user-exam/ExamLeaderBoard";
 import ExamAnswerSheet from "./pages/free-exam-pages/user-exam/ExamAnswerSheet";
 import ExamDetails from "./pages/free-exam-pages/user-exam/ExamDetails";
+import Rank from "./pages/free-exam-pages/pages/Rank";
+import Routine from "./pages/free-exam-pages/pages/Routine";
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +45,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/free",
+        path: "",
         element: (
           <FreeExamPrivateRoute>
             <FreeHome />
@@ -75,6 +77,22 @@ export const router = createBrowserRouter([
         element: (
           <FreeExamPrivateRoute>
             <ExamLeaderBoard />
+          </FreeExamPrivateRoute>
+        ),
+      },
+         {
+        path: "rank",
+        element: (
+          <FreeExamPrivateRoute>
+            <Rank />
+          </FreeExamPrivateRoute>
+        ),
+      },
+            {
+        path: "routine",
+        element: (
+          <FreeExamPrivateRoute>
+            <Routine />
           </FreeExamPrivateRoute>
         ),
       },

@@ -2,13 +2,10 @@
 import { FreeUserContext } from "@/context/FreeUser.context";
 import { use } from "react";
 import UserAvatar from "./userAvatar";
-import { useLocation } from "react-router";
 
 const NavBar = () => {
     const {user, logout} = use(FreeUserContext) as any
-    const location = useLocation()
-
-    if(location.pathname.includes('playground')) return null
+  
     return (
         
         <div className="flex justify-between shadow-xl px-2 rounded-full mt-1  dark:bg-dark-red items-center bg-white dark:bg-zinc-800">

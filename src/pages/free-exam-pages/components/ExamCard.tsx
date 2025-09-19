@@ -20,9 +20,10 @@ type Exam = {
 type ExamCardProps = {
   exam: Exam;
   loading?: boolean;
+  hasParticipated?: boolean
 };
 
-const ExamCard = ({ exam, loading }: ExamCardProps) => {
+const ExamCard = ({ exam, loading, hasParticipated }: ExamCardProps) => {
   const [timeLeft, setTimeLeft] = useState({
     days: "0",
     hours: "0",
@@ -122,7 +123,9 @@ const ExamCard = ({ exam, loading }: ExamCardProps) => {
         </>
       )}
 
-      {status === "running" && (
+      <div>
+        {!hasParticipated ? <>
+          {status === "running" && (
         <Link to={`/free/playground/${exam.id}`}>
           <Button
             className="mt-2 bg-gradient-to-r from-red-500 via-red-600 to-pink-500 text-white"
@@ -133,6 +136,10 @@ const ExamCard = ({ exam, loading }: ExamCardProps) => {
           </Button>
         </Link>
       )}
+        </> : <div className="bg-zinc-400 rounded-xl text-white">তুমি এক্সামটি দিয়েছো!</div>}
+      </div>
+
+  
 
       {status === "ended" && (
         <div className="text-red-500 font-semibold text-lg">শেষ</div>

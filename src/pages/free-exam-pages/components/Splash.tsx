@@ -2,12 +2,13 @@
 const Splash = () => {
   return (
     <div>
-      <div className="flex flex-col items-center justify-center h-svh dark:bg-zinc-900 fixed left-0 top-0 w-full">
+      <div className="flex flex-col items-center justify-center h-svh bg-white dark:bg-zinc-900 fixed left-0 top-0 w-full">
         <img
           className="h-[70px] w-[70px]"
           src="https://i.postimg.cc/TYpCjqyD/image.png"
         />
         <div className="font-bold text-xl mt-2">Britto</div>
+        <div className="text-sm">Stay in the circle, but think out of the circle</div>
         <Spinner/>
         <div className='text-sm font-bold'>ইকটুখানি অপেক্ষা করো...!</div>
       </div>

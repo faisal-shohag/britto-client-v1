@@ -1,11 +1,11 @@
-// components/exam-results/leaderboard.tsx
+
 import React, { useState } from "react";
 import { useExamPaticipants } from "@/hooks/free-exam-hooks/use-leaderboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Trophy, Medal, Award, Clock, Crown, User } from "lucide-react";
+import { Trophy, User } from "lucide-react";
 import { FaFaceSadTear } from "react-icons/fa6";
 
 interface LeaderboardProps {
@@ -27,15 +27,6 @@ export const Participants: React.FC<LeaderboardProps> = ({
     limit,
   });
 
-
-
-
-  const getRankIcon = (rank: number) => {
-    if (rank === 1) return <Crown className="h-5 w-5 text-yellow-400" />;
-    if (rank === 2) return <Medal className="h-5 w-5 text-gray-300" />;
-    if (rank === 3) return <Award className="h-5 w-5 text-amber-600" />;
-    return <span className="text-zinc-400 font-medium">#{rank}</span>;
-  };
 
   if (isLoading) {
     return (
@@ -65,7 +56,8 @@ export const Participants: React.FC<LeaderboardProps> = ({
     );
   }
 
-  const { participants, exam, totalPages } = data;
+  const { participants, totalPages } = data;
+
 
   return (
     <>
@@ -88,39 +80,30 @@ export const Participants: React.FC<LeaderboardProps> = ({
           <div className="text-zinc-500"><FaFaceSadTear className="h-12 w-12"/></div>
           <div className="text-lg text-zinc-700">এখনো কেউ এক্সাম দেয়নি!</div>
         </div>}
-          {participants.map((entry) => (
+         <div className="mt-3">
+           {participants.map((entry) => (
             <div
               key={entry.id}
-              className={`flex items-center gap-4 p-4 rounded-lg ${
-                entry.userId === userId ? "bg-primary/10" : "bg-background"
+              className={`flex items-center gap-4 py-1 px-2 rounded-lg ${
+                entry.userId == userId ? "bg-gradient-to-r from-pink-600 to-red-500  text-white" : "bg-white"
               }`}
             >
-              <div className="w-12 flex justify-center">
-                {getRankIcon(entry.rank)}
-              </div>
-              <Avatar className="h-10 w-10">
+
+              <Avatar className="h-7 w-7">
                 <AvatarImage src={entry.user.picture} alt={entry.user.name} />
                 <AvatarFallback>
                   <User className="h-5 w-5" />
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <p className="font-semibold">{entry.user.name}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="font-semibold text-sm">{entry.user.name}</p>
+                <p className="text-xs">
                   {entry.user.college || entry.user.group}
                 </p>
               </div>
-              <div className="text-right">
-                <p className="font-semibold">
-                  {entry.score}/{exam.totalMarks}
-                </p>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  {entry.timeTakenMinutes} min
-                </div>
-              </div>
             </div>
           ))}
+         </div>
         </div>
 
         {/* Pagination */}

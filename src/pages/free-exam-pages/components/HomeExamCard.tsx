@@ -5,6 +5,7 @@ import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { Link } from "react-router";
+import { Spinner } from "./Splash";
 
 const HomeExamCard = () => {
   const { data: exam, isLoading } = useUpcomingExam();
@@ -65,7 +66,8 @@ const HomeExamCard = () => {
   if (isLoading) {
     return (
       <div className="p-5 bg-[rgba(255,255,255,0.05)] backdrop-blur-sm rounded-lg text-center border relative">
-        Loading exam...
+        <Spinner/>
+       এক্সাম লোড হচ্ছে...
       </div>
     );
   }

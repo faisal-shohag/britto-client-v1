@@ -8,11 +8,9 @@ import {
 import type { UserAnswer } from '@/hooks/free-exam-hooks/user-user-exams';
 import { ExamTimer } from './exam-timer';
 // import { ExamHeader } from './exam-header';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 // import { Badge } from '@/components/ui/badge';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
@@ -137,7 +135,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
       setIsExamActive(false);
       setShowSubmitDialog(false);
       
-      navigate(`/free/exams/${examId}/results`);
+      navigate(`/free/exam/${examId}`);
     } catch (error) {
       console.error('Failed to submit exam:', error);
     }
@@ -233,10 +231,10 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
               You have already completed this exam.
             </p>
             <Button 
-              onClick={() => navigate(`/exams/${examId}/results`)}
+              onClick={() =>   navigate(`/free/exam/${examId}`)}
               className="bg-green-600 hover:bg-green-700"
             >
-              View Results
+              Back
             </Button>
           </CardContent>
         </Card>
@@ -259,7 +257,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
             </p>
             <Button 
               variant="outline" 
-              onClick={() => navigate('/free')}
+              onClick={() =>   navigate(`/free/exam/${examId}`)}
               className="border-blue-500/20 text-blue-400 hover:bg-blue-500/10"
             >
               Go Back
@@ -324,18 +322,9 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
       </div>
 
       <div className="max-w-4xl mx-auto p-4 pb-20">
-        {/* Exam Header */}
-        {/* <div className="mb-8">
-          <ExamHeader
-            examData={examData.examData}
-            currentQuestionIndex={0}
-            totalQuestions={examData.questions.length}
-            answeredCount={stats.answered}
-          />
-        </div> */}
 
         {/* All Questions */}
-        <div className="space-y-8">
+        <div className="space-y-3">
           {examData.questions.map((question, index) => {
             const currentAnswer = answers[question.question.id];
             
@@ -346,22 +335,6 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                 id={`question-${question.question.id}`}
               >
                 <CardHeader>
-                  {/* <div className="flex items-start justify-between mb-4"> */}
-                    {/* <div className="flex items-center gap-2"> */}
-                      {/* <HelpCircle className="h-5 w-5 text-blue-400" />
-                      <span className="text-sm text-zinc-400">
-                        Question {index + 1} of {examData.questions.length}
-                      </span> */}
-                      {/* <span>{index+1}.</span> */}
-                     
-                    {/* </div> */}
-                    
-                    {/* <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
-                      <Target className="h-3 w-3 mr-1" />
-                      {question.marks} {question.marks === 1 ? 'mark' : 'marks'}
-                    </Badge> */}
-                  {/* </div> */}
-                  
                   <div className="flex items-center gap-1 font-bold  leading-relaxed">
                   {bnNumber(index+1)}.{question.question.question}  {currentAnswer?.isAnswered && (
                         <CheckCircle className="h-4 w-4 text-green-400" />
@@ -391,57 +364,60 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
 
                   {/* Options */}
                   <div className="space-y-3">
-                    <RadioGroup
-                      value={currentAnswer?.optionId?.toString()}
-                      onValueChange={(value) => handleAnswerSelect(question.question.id, parseInt(value))}
-                      className="space-y-3"
-                    >
-                      {question.question.options
-                        .sort((a, b) => a.optionOrder - b.optionOrder)
-                        .map((option, optionIndex) => (
+                    {question.question.options
+                      .sort((a, b) => a.optionOrder - b.optionOrder)
+                      .map((option, optionIndex) => {
+                        const isSelected = currentAnswer?.optionId === option.id;
+                        
+                        return (
                           <div key={option.id}>
-                            <div className="flex items-center space-x-3 p-2 rounded-lg border dark:border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/30 transition-all cursor-pointer">
-                              <RadioGroupItem
-                                value={option.id.toString()}
-                                id={`${question.question.id}-${option.id}`}
-                                className="mt-1 text-blue-400 border-zinc-600 focus:ring-blue-400"
-                              />
-                              <Label
-                                htmlFor={`${question.question.id}-${option.id}`}
-                                className="flex-1 cursor-pointer"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white border dark:bg-zinc-700 dark:text-zinc-300 text-sm font-medium shrink-0">
-                                    {String.fromCharCode(65 + optionIndex)}
+                            <div 
+                              onClick={() => handleAnswerSelect(question.question.id, option.id)}
+                              className={`
+                                flex items-center space-x-3 py-1 px-3 rounded-lg border transition-all cursor-pointer
+                                ${isSelected 
+                                  ? 'border-blue-500 bg-blue-500/10 dark:bg-blue-500/20' 
+                                  : 'dark:border-zinc-700 border-gray-200 hover:border-zinc-600 hover:bg-zinc-800/30 dark:hover:bg-zinc-800/30 hover:bg-gray-50'
+                                }
+                              `}
+                            >
+                              <div className="flex items-center gap-3 w-full">
+                                <div className={`
+                                  flex items-center justify-center w-8 h-8 rounded-full border text-sm font-medium shrink-0
+                                  ${isSelected 
+                                    ? 'bg-blue-500 text-white border-blue-500' 
+                                    : 'bg-white dark:bg-zinc-700 dark:text-zinc-300 border-gray-300 dark:border-zinc-600'
+                                  }
+                                `}>
+                                  {String.fromCharCode(65 + optionIndex)}
+                                </div>
+                                
+                                <div className="flex-1">
+                                  <div className={`leading-relaxed ${isSelected ? 'text-blue-700 dark:text-blue-300 font-medium' : 'dark:text-zinc-200'}`}>
+                                    {option.optionText}
                                   </div>
                                   
-                                  <div className="flex-1">
-                                    <div className="dark:text-zinc-200 leading-relaxed">
-                                      {option.optionText}
+                                  {option.description && (
+                                    <div className={`text-sm mt-2 ${isSelected ? 'text-blue-600 dark:text-blue-400' : 'dark:text-zinc-400 text-gray-600'}`}>
+                                      {option.description}
                                     </div>
-                                    
-                                    {option.description && (
-                                      <div className="text-sm dark:text-zinc-400 mt-2">
-                                        {option.description}
-                                      </div>
-                                    )}
-                                    
-                                    {option.image && (
-                                      <div className="mt-3">
-                                        <img
-                                          src={option.image}
-                                          alt={`Option ${String.fromCharCode(65 + optionIndex)}`}
-                                          className="max-w-32 h-20 object-cover rounded border border-zinc-700"
-                                        />
-                                      </div>
-                                    )}
-                                  </div>
+                                  )}
+                                  
+                                  {option.image && (
+                                    <div className="mt-3">
+                                      <img
+                                        src={option.image}
+                                        alt={`Option ${String.fromCharCode(65 + optionIndex)}`}
+                                        className="max-w-32 h-20 object-cover rounded border border-zinc-700"
+                                      />
+                                    </div>
+                                  )}
                                 </div>
-                              </Label>
+                              </div>
                             </div>
                           </div>
-                        ))}
-                    </RadioGroup>
+                        );
+                      })}
                   </div>
                 </CardContent>
               </div>
@@ -453,26 +429,6 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
         <div className="mt-10">
           <Card className="bg-white dark:bg-zinc-900/50 dark:border-zinc-800">
             <CardContent className="text-center space-y-4">
-              {/* <div className="text-lg font-medium dark:text-zinc-200">এক্সাম শেষ?</div> */}
-              
-              <div className="grid grid-cols-2 gap-4 max-w-md mx-auto text-sm">
-                {/* <div className="flex items-center justify-center gap-2 p-3 bg-green-500/10 rounded border border-green-500">
-             
-                  <div className="text-green-600 flex flex-col">
-                       <span >{stats.answered} টি</span>
-                  <span> উত্তর করেছো</span>
-                  </div>
-               
-                </div> */}
-                {/* <div className="flex items-center justify-center gap-2 p-3 bg-orange-500/10 rounded border border-orange-500">
-               
-                    <div className="text-orange-500 flex flex-col">
-                       <span >{stats.unanswered} টি</span>
-                  <span> উত্তর করা বাকি</span>
-                  </div>
-                </div> */}
-              </div>
-
               <Button
                 onClick={() => setShowSubmitDialog(true)}
                 disabled={submitExamMutation.isPending}
