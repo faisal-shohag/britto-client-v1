@@ -153,7 +153,7 @@ export const ExamAccessGate: React.FC<ExamAccessGateProps> = ({
 
             <Button
               variant="outline"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/free")}
               className="border-blue-500/20 text-blue-400 hover:bg-blue-500/10"
             >
               Go Back

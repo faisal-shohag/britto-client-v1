@@ -8,8 +8,6 @@ import {
   XCircle, 
   AlertCircle,
   HelpCircle,
-  Eye,
-  EyeOff
 } from 'lucide-react';
 
 interface AnswerSheetProps {
@@ -17,7 +15,7 @@ interface AnswerSheetProps {
 }
 
 export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
-  const [showExplanations, setShowExplanations] = useState(false);
+  // const [showExplanations, setShowExplanations] = useState(false);
 
   const [filter, setFilter] = useState<'all' | 'correct' | 'wrong' | 'unanswered'>('all');
 
@@ -56,78 +54,80 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
   return (
     <div className="space-y-6">
       {/* Filter and Stats */}
-      <Card className="bg-zinc-900/50 border-zinc-800">
+      <Card className="dark:bg-zinc-900/50 bg-white dark:border-zinc-800">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-zinc-100">Answer Review</CardTitle>
-            <Button
+          <div className="text-center">
+            <CardTitle className="dark:text-zinc-100 text-lg">উত্তরপত্র</CardTitle>
+
+            <div>তুমি মার্ক <span>{stats.correct}</span> পেয়েছো!</div>
+            {/* <Button
               variant="outline"
               size="sm"
               onClick={() => setShowExplanations(!showExplanations)}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+              className="border-zinc-700 dark:text-zinc-300 hover:bg-zinc-800"
             >
               {showExplanations ? <EyeOff className="mr-2 h-4 w-4" /> : <Eye className="mr-2 h-4 w-4" />}
               {showExplanations ? 'Hide' : 'Show'} Explanations
-            </Button>
+            </Button> */}
           </div>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex justify-center flex-wrap gap-2 mb-4">
             <Button
               variant={filter === 'all' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setFilter('all')}
-              className={filter === 'all' ? 'bg-blue-600' : 'border-zinc-700 text-zinc-300'}
+              className={filter === 'all' ? 'bg-blue-600' : 'border-zinc-700 dark:text-zinc-300'}
             >
-              All ({stats.total})
+              সব ({stats.total})
             </Button>
             <Button
               variant={filter === 'correct' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setFilter('correct')}
-              className={filter === 'correct' ? 'bg-green-600' : 'border-zinc-700 text-zinc-300'}
+              className={filter === 'correct' ? 'bg-green-600' : 'border-zinc-700 dark:text-zinc-300'}
             >
-              Correct ({stats.correct})
+              ঠিক ({stats.correct})
             </Button>
             <Button
               variant={filter === 'wrong' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setFilter('wrong')}
-              className={filter === 'wrong' ? 'bg-red-600' : 'border-zinc-700 text-zinc-300'}
+              className={filter === 'wrong' ? 'bg-red-600' : 'border-zinc-700 dark:text-zinc-300'}
             >
-              Wrong ({stats.wrong})
+              ভুল ({stats.wrong})
             </Button>
             <Button
               variant={filter === 'unanswered' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setFilter('unanswered')}
-              className={filter === 'unanswered' ? 'bg-zinc-600' : 'border-zinc-700 text-zinc-300'}
+              className={filter === 'unanswered' ? 'bg-zinc-600' : 'border-zinc-700 dark:text-zinc-300'}
             >
-              Unanswered ({stats.unanswered})
+              অনুত্তর ({stats.unanswered})
             </Button>
           </div>
-          <div className="text-sm text-zinc-400">
+          {/* <div className="text-sm dark:text-zinc-400">
             Showing {filteredAnswers.length} question{filteredAnswers.length !== 1 ? 's' : ''}
-          </div>
+          </div> */}
         </CardContent>
       </Card>
 
       {/* All Questions Display */}
       {filteredAnswers.length === 0 ? (
-        <Card className="bg-zinc-900/50 border-zinc-800">
+        <Card className="">
           <CardContent className="p-6">
-            <p className="text-zinc-400">No questions match the selected filter.</p>
+            <p className="dark:text-zinc-400">No questions match the selected filter.</p>
           </CardContent>
         </Card>
       ) : (
         filteredAnswers.map((answer) => (
-          <Card key={answer.id} className="bg-zinc-900/50 border-zinc-800">
+          <Card key={answer.id} className="">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2">
                     {getStatusIcon(answer)}
-                    <span className="text-sm text-zinc-400">
+                    <span className="text-sm dark:text-zinc-400">
                       Question {answers.findIndex(a => a.id === answer.id) + 1}
                     </span>
                   </div>
@@ -136,20 +136,20 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
                      answer.isCorrect ? 'Correct' : 'Wrong'}
                   </Badge>
                   {answer.question.difficulty && (
-                    <Badge variant="secondary" className="bg-zinc-800 text-zinc-300 text-xs">
+                    <Badge variant="secondary" className=" text-zinc-300 text-xs">
                       {answer.question.difficulty}
                     </Badge>
                   )}
                 </div>
-                <div className="text-sm text-zinc-400">
+                <div className="text-sm dark:text-zinc-400">
                   +{answer.marksAwarded} marks
                 </div>
               </div>
-              <CardTitle className="text-xl text-zinc-100 leading-relaxed mt-4">
+              <CardTitle className="text-xl dark:text-zinc-100 leading-relaxed mt-4">
                 {answer.question.question}
               </CardTitle>
               {answer.question.description && (
-                <p className="text-zinc-400 mt-2">
+                <p className="dark:text-zinc-400 mt-2">
                   {answer.question.description}
                 </p>
               )}
@@ -161,7 +161,7 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
                   <img
                     src={answer.question.image}
                     alt="Question"
-                    className="max-w-lg w-full rounded-lg border border-zinc-700"
+                    className="max-w-lg w-full rounded-lg border"
                   />
                 </div>
               )}
@@ -176,18 +176,18 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
                       const isCorrect = option.isCorrect;
                       const isWrongSelection = isSelected && !isCorrect;
 
-                      let borderColor = 'border-zinc-700';
-                      let bgColor = 'bg-zinc-800/30';
-                      let textColor = 'text-zinc-200';
+                      let borderColor = 'dark:border-zinc-700';
+                      let bgColor = 'dark:bg-zinc-800/30';
+                      let textColor = 'dark:text-zinc-200';
 
                       if (isCorrect) {
                         borderColor = 'border-green-500/50';
                         bgColor = 'bg-green-500/10';
-                        textColor = 'text-zinc-200';
+                        textColor = 'dark:text-zinc-200';
                       } else if (isWrongSelection) {
                         borderColor = 'border-red-500/50';
                         bgColor = 'bg-red-500/10';
-                        textColor = 'text-zinc-200';
+                        textColor = 'dark:text-zinc-200';
                       }
 
                       return (
@@ -283,13 +283,13 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
               </div>
 
               {/* Explanation */}
-              {showExplanations && answer.question.explanation && (
-                <div className="p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg">
-                  <div className="flex items-center gap-2 mb-3">
+              {answer.question.explanation && (
+                <div className="p-2 bg-blue-500/5 text-sm border border-blue-500/20 rounded-lg">
+                  <div className="flex items-center gap-1 mb-3">
                     <HelpCircle className="h-5 w-5 text-blue-400" />
-                    <span className="font-medium text-blue-400">Explanation</span>
+                    <span className="font-medium text-blue-400">ব্যাখ্যা:</span>
                   </div>
-                  <p className="text-zinc-300 leading-relaxed">
+                  <p className="dark:text-zinc-300 leading-relaxed">
                     {answer.question.explanation}
                   </p>
                 </div>

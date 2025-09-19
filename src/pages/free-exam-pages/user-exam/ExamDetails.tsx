@@ -17,6 +17,7 @@ const ExamDetails = () => {
     <Spinner/>
   </div>
  const timeStatus = accessData?.timeStatus
+ console.log(accessData)
   return (
     <div className="space-y-5">
       <ExamCard exam={exam} loading={isLoading} hasParticipated={accessData.hasParticipated}/>

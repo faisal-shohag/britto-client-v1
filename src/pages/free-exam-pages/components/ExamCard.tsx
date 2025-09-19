@@ -136,7 +136,10 @@ const ExamCard = ({ exam, loading, hasParticipated }: ExamCardProps) => {
           </Button>
         </Link>
       )}
-        </> : <div className="bg-zinc-400 rounded-xl text-white">তুমি এক্সামটি দিয়েছো!</div>}
+        </> : <div className="rounded-xl text-white">
+      <div>    তুমি এক্সামটি দিয়েছো!</div>
+         <Link to={`/free/answersheet/exam/${exam.id}`}> <Button className="bg-gradient-to-r text-white from-red-600 to-pink-500">Answer Sheet</Button></Link>
+          </div>}
       </div>
 
   

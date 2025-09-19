@@ -4,6 +4,7 @@ import { use } from "react";
 import { useParams } from "react-router";
 import { AnswerSheet } from "./answer-sheet";
 import { useExamAccess } from "@/hooks/free-exam-hooks/user-user-exams";
+import { Spinner } from "../components/Splash";
 
 const ExamAnswerSheet = () => {
   const { id: examId } = useParams() as any;
@@ -14,17 +15,20 @@ const ExamAnswerSheet = () => {
     user.id
   );
 
-  if (isLoading || accessLoading) return <div>Loading...</div>;
+  if (isLoading || accessLoading) return <div>
+    <Spinner/>
+    Loading...</div>;
   const { answers } = data;
-  const { timeStatus } = accessData;
+  const { hasParticipated } = accessData;
+  console.log(accessData)
 
   return (
     <div>
-      {timeStatus.isAferEnd ? (
+      {hasParticipated ? 
         <AnswerSheet answers={answers} />
-      ) : (
-        <div>Result is not published yet!</div>
-      )}
+       : 
+        <div>তুমি এই এক্সাম টি দাও নি!</div>
+      }
     </div>
   );
 };

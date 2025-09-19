@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Crown, Trophy, Medal, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '@/lib/api';
@@ -7,15 +7,17 @@ import api from '@/lib/api';
 import { Button } from '@/components/ui/button';
 // import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+// import { Badge } from '@/components/ui/badge';
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '../components/Splash';
+import { FreeUserContext } from '@/context/FreeUser.context';
+
 
 // Custom hooks for API calls
-const useGlobalLeaderboard = (page = 1, limit = 10, group = '') => {
+const useGlobalLeaderboard = (page = 1, limit = 30, group = '') => {
   return useQuery({
     queryKey: ['globalLeaderboard', page, limit, group],
     queryFn: async () => {
@@ -26,12 +28,28 @@ const useGlobalLeaderboard = (page = 1, limit = 10, group = '') => {
       });
       
       const response = await api.get(`/freeExam/global-leaderboard?${params}`);
-      return response.data;
+      return response.data.data;
     },
     // keepPreviousData: true,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
+
+const useMyRank = (userId) => {
+  return useQuery({
+    queryKey: ['myRankStates'],
+    queryFn: async () => {
+      try {
+        const response = await api.get(`/freeExam/users/${userId}/rank-stats`);
+      return response.data.data;
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    staleTime: 10 * 60 * 1000, // 10 minutes
+  });
+};
+
 
 // const useLeaderboardStats = () => {
 //   return useQuery({
@@ -62,6 +80,7 @@ const useGlobalLeaderboard = (page = 1, limit = 10, group = '') => {
 
 const Rank = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const {user} = use(FreeUserContext) as any
 //   const [selectedGroup, setSelectedGroup] = useState('');
 //   const [searchTerm, setSearchTerm] = useState('');
 
@@ -70,7 +89,9 @@ const Rank = () => {
     isLoading,
     error,
     isFetching
-  } = useGlobalLeaderboard(currentPage, 10);
+  } = useGlobalLeaderboard(currentPage, 30);
+
+  const {data:myRank, isLoading:myRankLoading} = useMyRank(user.id)
 
 //   const { data: statsData } = useLeaderboardStats();
 //   const { data: topPerformersData } = useTopPerformers(3, selectedGroup);
@@ -105,18 +126,18 @@ const Rank = () => {
     }
   };
 
-  const getGroupBadgeVariant = (group) => {
-    switch (group) {
-      case 'SCIENCE':
-        return 'bg-blue-100 text-blue-800 hover:bg-blue-200';
-      case 'COMMERCE':
-        return 'bg-green-100 text-green-800 hover:bg-green-200';
-      case 'ARTS':
-        return 'bg-purple-100 text-purple-800 hover:bg-purple-200';
-      default:
-        return 'bg-gray-100 text-gray-800 hover:bg-gray-200';
-    }
-  };
+  // const getGroupBadgeVariant = (group) => {
+  //   switch (group) {
+  //     case 'SCIENCE':
+  //       return 'bg-blue-100 text-blue-800 hover:bg-blue-200';
+  //     case 'COMMERCE':
+  //       return 'bg-green-100 text-green-800 hover:bg-green-200';
+  //     case 'ARTS':
+  //       return 'bg-purple-100 text-purple-800 hover:bg-purple-200';
+  //     default:
+  //       return 'bg-gray-100 text-gray-800 hover:bg-gray-200';
+  //   }
+  // };
 
   const getInitials = (name) => {
     return name
@@ -151,8 +172,10 @@ const Rank = () => {
     );
   }
 
+// console.log(leaderboardData)
+
   return (
-    <div className="min-h-screen  p-4">
+    <div className="min-h-screen">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header Section */}
         {/* <Card>
@@ -288,10 +311,11 @@ const Rank = () => {
         {/* Leaderboard Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Rankings</CardTitle>
+            <CardTitle className='text-center text-lg'>অবস্থান</CardTitle>
+            <div className='text-center border-b border-dashed pb-2 text-sm'>তোমার বর্তমান অবস্থান: {myRank?.rank} </div>
           </CardHeader>
           <CardContent className="p-0">
-            {isLoading ? (
+            {(isLoading || myRankLoading) ? (
               <div className="space-y-4 p-4">
                 {Array.from({ length: 10 }).map((_, i) => (
                   <div key={i} className="flex items-center space-x-4 p-4">
@@ -312,15 +336,15 @@ const Rank = () => {
                   {leaderboardData?.leaderboard?.map((entry) => (
                     <div
                       key={entry.id}
-                      className={`flex items-center gap-4 p-4 ${getRankCardClass(entry.rank)} transition-all duration-200`}
+                      className={`flex items-center gap-4 p-4 ${entry.user.id === user.id ? 'bg-gradient-to-r from-pink-600 to-red-500 text-white': getRankCardClass(entry.rank)} $ transition-all duration-200`}
                     >
                       {/* Rank */}
-                      <div className="flex-shrink-0 w-8 text-center">
+                      <div className="flex-shrink-0 w-5 text-center">
                         {getRankIcon(entry.rank)}
                       </div>
 
                       {/* Avatar */}
-                      <Avatar className="w-12 h-12">
+                      <Avatar className="w-7 h-7 text-xs">
                         <AvatarImage src={entry.user.picture} />
                         <AvatarFallback>
                           {getInitials(entry.user.name)}
@@ -329,18 +353,18 @@ const Rank = () => {
 
                       {/* User Info */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 truncate">
+                        <h3 className="font-semibold text-sm truncate">
                           {entry.user.name}
                         </h3>
-                        <p className="text-sm text-gray-600 truncate">
+                        <p className="text-xs  truncate">
                           {entry.user.college}
                         </p>
                       </div>
 
                       {/* Group Badge */}
-                      <Badge className={getGroupBadgeVariant(entry.user.group)}>
+                      {/* <Badge className={getGroupBadgeVariant(entry.user.group)}>
                         {entry.user.group}
-                      </Badge>
+                      </Badge> */}
 
                       {/* Stats */}
                       <div className="hidden md:block text-right">
@@ -350,18 +374,18 @@ const Rank = () => {
                         </div>
                       </div>
 
-                      <div className="text-right">
+                      {/* <div className="text-right">
                         <div className="text-sm text-gray-600">Exams</div>
                         <div className="font-semibold">{entry.totalExamsCompleted}</div>
-                      </div>
+                      </div> */}
 
                       {/* Total Score */}
-                      <div className="text-right min-w-0">
+                      {/* <div className="text-right min-w-0">
                         <div className="text-lg font-bold text-blue-600">
                           {entry.totalMarks}
                         </div>
                         <div className="text-xs text-gray-500">Total Score</div>
-                      </div>
+                      </div> */}
                     </div>
                   ))}
                 </div>

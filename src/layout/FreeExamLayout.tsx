@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
-import BottomNavigationBar from "@/pages/free-exam-pages/components/bottomNavigationBar";
+import BottomNavigationBar from "@/pages/free-exam-pages/components/BottomNavigationBar";
 
 import NavBar from "@/pages/free-exam-pages/components/NavBar";
 import { Outlet, useLocation } from "react-router";
@@ -18,7 +18,7 @@ const FreeExamLayout = () => {
       </div>
       <Toaster/>
 
-      <BottomNavigationBar/>
+      {location.pathname.includes('playground') ? null:<BottomNavigationBar/>} 
     </div>
   );
 };

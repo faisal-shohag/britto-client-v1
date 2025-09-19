@@ -80,18 +80,18 @@ export const Participants: React.FC<LeaderboardProps> = ({
           <div className="text-zinc-500"><FaFaceSadTear className="h-12 w-12"/></div>
           <div className="text-lg text-zinc-700">এখনো কেউ এক্সাম দেয়নি!</div>
         </div>}
-         <div className="mt-3">
+         <div className="mt-3 space-y-2">
            {participants.map((entry) => (
             <div
               key={entry.id}
-              className={`flex items-center gap-4 py-1 px-2 rounded-lg ${
+              className={`flex items-center gap-4 py-1 px-2 border rounded-lg ${
                 entry.userId == userId ? "bg-gradient-to-r from-pink-600 to-red-500  text-white" : "bg-white"
               }`}
             >
 
               <Avatar className="h-7 w-7">
                 <AvatarImage src={entry.user.picture} alt={entry.user.name} />
-                <AvatarFallback>
+                <AvatarFallback className="text-black">
                   <User className="h-5 w-5" />
                 </AvatarFallback>
               </Avatar>

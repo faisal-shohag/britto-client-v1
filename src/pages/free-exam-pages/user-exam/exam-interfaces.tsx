@@ -135,7 +135,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
       setIsExamActive(false);
       setShowSubmitDialog(false);
       
-      navigate(`/free/exam/${examId}`);
+      navigate(`/free/answersheet/exam/${examId}`);
     } catch (error) {
       console.error('Failed to submit exam:', error);
     }
