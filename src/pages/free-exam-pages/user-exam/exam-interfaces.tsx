@@ -291,19 +291,17 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
   return (
     <div className="min-h-screen dark:bg-zinc-950">
       {/* Fixed Header with Timer and Submit */}
-      <div className="sticky top-0 z-50 dark:bg-zinc-950/95 backdrop-blur border-b dark:border-zinc-800">
-        <div className="max-w-4xl mx-auto p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 pt-2 bg-white justify-center">
               <h1 className="text-xl font-bold ">
                 {examData.examData.title}
               </h1>
-              <div className="text-sm dark:text-zinc-400">
-                {stats.answered} of {stats.total} answered
-              </div>
+           
             </div>
-            
-            <div className="flex items-center gap-4">
+      <div className="sticky top-0 z-50 bg-white dark:bg-zinc-950/95 backdrop-blur ">
+      
+        <div className="py-3">
+            <div className="flex justify-between items-center gap-4 px-3">
+              
               <ExamTimer
                 durationInMinutes={examData.examData.durationInMinutes}
                 onTimeUp={handleTimeUp}
@@ -314,13 +312,13 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
               <Button
                 onClick={() => setShowSubmitDialog(true)}
                 disabled={submitExamMutation.isPending}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-gradient-to-r from-red-600 to-pink-500 text-white"
                 size="sm"
               >
-                <Send className="mr-2 h-4 w-4" />
-                {submitExamMutation.isPending ? 'Submitting...' : 'Submit'}
+                <Send />
+                {submitExamMutation.isPending ? 'Submitting...' : 'সাবমিট'}
               </Button>
-            </div>
+       
           </div>
         </div>
       </div>
@@ -342,9 +340,9 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
             const currentAnswer = answers[question.question.id];
             
             return (
-              <Card 
+              <div 
                 key={question.question.id} 
-                className="bg-zinc-900/50 border-zinc-800"
+                className="dark:bg-zinc-900/50 bg-white rounded-xl py-3"
                 id={`question-${question.question.id}`}
               >
                 <CardHeader>
@@ -364,14 +362,14 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                     </Badge> */}
                   {/* </div> */}
                   
-                  <CardTitle className="text-xl flex items-center gap-1 text-zinc-100 leading-relaxed">
-                    <span>{bnNumber(index+1)}.</span> {question.question.question}  {currentAnswer?.isAnswered && (
+                  <div className="flex items-center gap-1 font-bold  leading-relaxed">
+                  {bnNumber(index+1)}.{question.question.question}  {currentAnswer?.isAnswered && (
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       )}
-                  </CardTitle>
+                  </div>
                   
                   {question.question.description && (
-                    <p className="text-zinc-400  leading-relaxed">
+                    <p className="  leading-relaxed">
                       {question.question.description}
                     </p>
                   )}
@@ -385,7 +383,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                         <img
                           src={question.question.image}
                           alt="Question"
-                          className="w-full rounded-lg border border-zinc-700"
+                          className="w-full rounded-lg border dark:border-zinc-700"
                         />
                       </div>
                     </div>
@@ -402,7 +400,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                         .sort((a, b) => a.optionOrder - b.optionOrder)
                         .map((option, optionIndex) => (
                           <div key={option.id}>
-                            <div className="flex items-center space-x-3 p-2 rounded-lg border border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/30 transition-all cursor-pointer">
+                            <div className="flex items-center space-x-3 p-2 rounded-lg border dark:border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/30 transition-all cursor-pointer">
                               <RadioGroupItem
                                 value={option.id.toString()}
                                 id={`${question.question.id}-${option.id}`}
@@ -413,17 +411,17 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                                 className="flex-1 cursor-pointer"
                               >
                                 <div className="flex items-center gap-3">
-                                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-700 text-zinc-300 text-sm font-medium shrink-0">
+                                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white border dark:bg-zinc-700 dark:text-zinc-300 text-sm font-medium shrink-0">
                                     {String.fromCharCode(65 + optionIndex)}
                                   </div>
                                   
                                   <div className="flex-1">
-                                    <div className="text-zinc-200 leading-relaxed">
+                                    <div className="dark:text-zinc-200 leading-relaxed">
                                       {option.optionText}
                                     </div>
                                     
                                     {option.description && (
-                                      <div className="text-sm text-zinc-400 mt-2">
+                                      <div className="text-sm dark:text-zinc-400 mt-2">
                                         {option.description}
                                       </div>
                                     )}
@@ -446,40 +444,47 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                     </RadioGroup>
                   </div>
                 </CardContent>
-              </Card>
+              </div>
             );
           })}
         </div>
 
         {/* Submit Section */}
-        <div className="mt-12">
-          <Card className="bg-zinc-900/50 border-zinc-800">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="text-lg font-medium text-zinc-200">Ready to submit your exam?</div>
+        <div className="mt-10">
+          <Card className="bg-white dark:bg-zinc-900/50 dark:border-zinc-800">
+            <CardContent className="text-center space-y-4">
+              {/* <div className="text-lg font-medium dark:text-zinc-200">এক্সাম শেষ?</div> */}
               
               <div className="grid grid-cols-2 gap-4 max-w-md mx-auto text-sm">
-                <div className="flex items-center justify-center gap-2 p-3 bg-green-500/10 rounded border border-green-500/20">
-                  <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span className="text-green-400">{stats.answered} Answered</span>
-                </div>
-                <div className="flex items-center justify-center gap-2 p-3 bg-orange-500/10 rounded border border-orange-500/20">
-                  <AlertTriangle className="h-4 w-4 text-orange-400" />
-                  <span className="text-orange-400">{stats.unanswered} Remaining</span>
-                </div>
+                {/* <div className="flex items-center justify-center gap-2 p-3 bg-green-500/10 rounded border border-green-500">
+             
+                  <div className="text-green-600 flex flex-col">
+                       <span >{stats.answered} টি</span>
+                  <span> উত্তর করেছো</span>
+                  </div>
+               
+                </div> */}
+                {/* <div className="flex items-center justify-center gap-2 p-3 bg-orange-500/10 rounded border border-orange-500">
+               
+                    <div className="text-orange-500 flex flex-col">
+                       <span >{stats.unanswered} টি</span>
+                  <span> উত্তর করা বাকি</span>
+                  </div>
+                </div> */}
               </div>
 
               <Button
                 onClick={() => setShowSubmitDialog(true)}
                 disabled={submitExamMutation.isPending}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 text-lg"
+                className="bg-gradient-to-r from-red-600 to-pink-500 text-white px-8 py-2 text-lg"
               >
-                <Send className="mr-2 h-5 w-5" />
-                {submitExamMutation.isPending ? 'Submitting...' : 'Submit Exam'}
+                <Send className="h-5 w-5" />
+                {submitExamMutation.isPending ? 'Submitting...' : 'সাবমিট করো'}
               </Button>
 
               {stats.unanswered > 0 && (
                 <p className="text-sm text-orange-400">
-                  You have {stats.unanswered} unanswered questions
+               তুমি এখনো {stats.unanswered} টি প্রশ্নের উত্তর দাও নি
                 </p>
               )}
             </CardContent>
@@ -491,7 +496,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
       {showScrollTop && (
         <Button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-40 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg"
+          className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-red-600 to-pink-500 text-white rounded-full p-3 shadow-lg"
           size="sm"
         >
           <ArrowUp className="h-4 w-4" />
@@ -503,13 +508,13 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
         <AlertDialogContent className="bg-zinc-900 border-zinc-800">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-zinc-100">
-              Submit Exam
+              এক্সাম সাবমিট
             </AlertDialogTitle>
             <AlertDialogDescription className="text-zinc-400">
-              Are you sure you want to submit your exam? This action cannot be undone.
+             তুমি কি নিশ্চিত তুমি এক্সাম সাবমিট করতে চাও?
               
               <div className="mt-4 p-4 bg-zinc-800/50 rounded-lg">
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-2 gap-4 text-xs">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400" />
                     <span className="text-zinc-300">{stats.answered} Answered</span>
@@ -523,8 +528,7 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
               
               {stats.unanswered > 0 && (
                 <p className="mt-2 text-orange-400 text-sm">
-                  Warning: You have {stats.unanswered} unanswered questions. 
-                  These will be marked as incorrect.
+                  Warning:  তুমি এখনো {stats.unanswered} টি প্রশ্নের উত্তর দাও নি
                 </p>
               )}
             </AlertDialogDescription>
@@ -533,14 +537,14 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
             <AlertDialogCancel 
               className="bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700"
             >
-              Continue Exam
+              না
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleSubmitExam}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-gradient-to-r from-red-600 to-pink-500 text-white"
               disabled={submitExamMutation.isPending}
             >
-              {submitExamMutation.isPending ? 'Submitting...' : 'Submit Exam'}
+              {submitExamMutation.isPending ? 'সাবমিট হচ্ছে...' : 'হ্যা, সাবমিট করবো'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

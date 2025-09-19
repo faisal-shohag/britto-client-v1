@@ -71,7 +71,7 @@ export const ExamTimer: React.FC<ExamTimerProps> = ({
   const getColorClasses = () => {
     if (timeLeft <= 300) return 'text-red-400 border-red-500/30 bg-red-500/5'; // 5 minutes
     if (timeLeft <= 900) return 'text-orange-400 border-orange-500/30 bg-orange-500/5'; // 15 minutes
-    return 'text-green-400 border-green-500/30 bg-green-500/5';
+    return '';
   };
 
   return (
@@ -89,7 +89,7 @@ export const ExamTimer: React.FC<ExamTimerProps> = ({
           </div>
           
           <div className="text-right">
-            <div className={`text-2xl font-bold font-mono ${isWarning ? 'animate-pulse' : ''}`}>
+            <div className={`text-2xl font-bold ${isWarning ? 'animate-pulse' : ''}`}>
               {formatTime(timeLeft)}
             </div>
             {/* <div className="text-xs opacity-75">
