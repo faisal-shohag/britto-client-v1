@@ -8,7 +8,7 @@ const NavBar = () => {
   
     return (
         
-        <div className="flex justify-between shadow-xl px-2 rounded-full mt-1  dark:bg-dark-red items-center bg-white dark:bg-zinc-800">
+        <div className="flex justify-between shadow-xl px-2 rounded-full mt-1  dark:bg-dark-red items-center  bg-white dark:bg-zinc-800">
                {user && <div className="flex  items-center gap-3">
 
                 <div> <UserAvatar name={user.name} logout={logout} gender={user.gender} college={user.college} role={user.role}/></div>

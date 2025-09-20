@@ -47,19 +47,19 @@ export const RecentExams: React.FC<RecentExamsProps> = ({
 
   if (isLoading) {
     return (
-      <Card className="bg-zinc-900/50 border-zinc-800">
+      <Card >
         <CardHeader>
-          <CardTitle className="text-zinc-100">পরীক্ষাসমূহ</CardTitle>
+          <CardTitle >পরীক্ষাসমূহ</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {Array.from({ length: limit }).map((_, i) => (
-            <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-zinc-700">
-              <Skeleton className="h-10 w-10 rounded-full bg-zinc-800" />
+            <div key={i} className="flex items-center gap-3 p-3 rounded-lg border ">
+              <Skeleton className="h-10 w-10 rounded-full" />
               <div className="flex-1 space-y-2">
-                <Skeleton className="h-4 w-3/4 bg-zinc-800" />
-                <Skeleton className="h-3 w-1/2 bg-zinc-800" />
+                <Skeleton className="h-4 w-3/4 " />
+                <Skeleton className="h-3 w-1/2 " />
               </div>
-              <Skeleton className="h-6 w-16 bg-zinc-800" />
+              <Skeleton className="h-6 w-16 " />
             </div>
           ))}
         </CardContent>
@@ -69,14 +69,14 @@ export const RecentExams: React.FC<RecentExamsProps> = ({
 
   if (!data?.exams.length) {
     return (
-      <Card className="bg-zinc-900/50 border-zinc-800">
+      <Card >
         <CardHeader>
-          <CardTitle className="text-zinc-100">পরীক্ষাসমূহ</CardTitle>
+          <CardTitle >পরীক্ষাসমূহ</CardTitle>
         </CardHeader>
         <CardContent className="text-center py-8">
-          <Calendar className="h-12 w-12 text-zinc-600 mx-auto mb-3" />
-          <div className="text-zinc-400 mb-2">No exams found</div>
-          <div className="text-sm text-zinc-500">
+          <Calendar className="h-12 w-12  mx-auto mb-3" />
+          <div className="mb-2">No exams found</div>
+          <div className="text-sm ">
             Create your first exam to get started
           </div>
         </CardContent>

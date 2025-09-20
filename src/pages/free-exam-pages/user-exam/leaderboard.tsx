@@ -7,8 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
-import { Trophy, Medal, Award, Clock, Crown, User } from "lucide-react";
+import { Trophy, Medal, Award, Crown, User } from "lucide-react";
 import { FaFaceSadTear } from "react-icons/fa6";
+import { bnNumber } from "@/lib/bnNumbers";
 
 interface LeaderboardProps {
   examId: number;
@@ -75,7 +76,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({
         <div className="flex items-center gap-2">
           <Trophy className="h-8 w-8" />
          <div>
-          <div className="font-bold"> যারা পরীক্ষা দিয়েছে</div>
+          <div className="font-bold"> যারা পরীক্ষা দিয়েছে({bnNumber(leaderboard.length)} জন)</div>
           <div className="text-xs"> পরীক্ষা শেষে এখানে সবার মার্ক এবং অবস্থান দেখতে পারবে</div>
          </div>
         </div>
@@ -108,25 +109,23 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({
           <div className="text-zinc-500"><FaFaceSadTear className="h-12 w-12"/></div>
           <div className="text-lg text-zinc-700">এখনো কেউ এক্সাম দেয়নি!</div>
         </div>}
-          {leaderboard.map((entry) => (
+       <div className="mt-3 space-y-2">
+           {leaderboard.map((entry, index) => (
             <div
               key={entry.id}
-              className={`flex items-center gap-4 p-4 rounded-lg ${
-                entry.userId === userId ? "bg-primary/10" : "bg-background"
+              className={`flex items-center gap-4 border py-1 px-2 rounded-lg ${
+                entry.userId === userId ? "bg-gradient-to-r from-pink-600 to-red-500 text-white" : "bg-background"
               }`}
-            >
-              <div className="w-12 flex justify-center">
-                {getRankIcon(entry.rank)}
-              </div>
-              <Avatar className="h-10 w-10">
+            > <div># {index+1}</div>
+              <Avatar className="h-7 w-7">
                 <AvatarImage src={entry.user.picture} alt={entry.user.name} />
                 <AvatarFallback>
                   <User className="h-5 w-5" />
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <p className="font-semibold">{entry.user.name}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="font-semibold text-sm">{entry.user.name}</p>
+                <p className="text-xs">
                   {entry.user.college || entry.user.group}
                 </p>
               </div>
@@ -134,13 +133,14 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({
                 <p className="font-semibold">
                   {entry.score}/{exam.totalMarks}
                 </p>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                {/* <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4" />
                   {entry.timeTakenMinutes} min
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
+       </div>
         </div>
 
         {/* Pagination */}

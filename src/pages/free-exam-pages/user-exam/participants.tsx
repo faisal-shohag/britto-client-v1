@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Trophy, User } from "lucide-react";
 import { FaFaceSadTear } from "react-icons/fa6";
+import { bnNumber } from "@/lib/bnNumbers";
 
 interface LeaderboardProps {
   examId: number;
@@ -20,12 +21,13 @@ export const Participants: React.FC<LeaderboardProps> = ({
 }) => {
   const [page, setPage] = useState(1);
 
-  const limit = 20;
+  const limit = 30;
 
   const { data, isLoading, error } = useExamPaticipants(examId, {
     page,
     limit,
   });
+
 
 
   if (isLoading) {
@@ -66,7 +68,7 @@ export const Participants: React.FC<LeaderboardProps> = ({
         <div className="flex items-center gap-2">
           <Trophy className="h-8 w-8" />
          <div>
-          <div className="font-bold"> যারা পরীক্ষা দিয়েছে</div>
+            <div className="font-bold"> যারা পরীক্ষা দিয়েছে({bnNumber(participants.length)} জন)</div>
           <div className="text-xs"> পরীক্ষা শেষে এখানে সবার মার্ক এবং অবস্থান দেখতে পারবে</div>
          </div>
         </div>
@@ -85,13 +87,13 @@ export const Participants: React.FC<LeaderboardProps> = ({
             <div
               key={entry.id}
               className={`flex items-center gap-4 py-1 px-2 border rounded-lg ${
-                entry.userId == userId ? "bg-gradient-to-r from-pink-600 to-red-500  text-white" : "bg-white"
+                entry.userId == userId ? "bg-gradient-to-r from-pink-600 to-red-500  text-white" : "bg-white dark:bg-zinc-950 "
               }`}
             >
 
               <Avatar className="h-7 w-7">
                 <AvatarImage src={entry.user.picture} alt={entry.user.name} />
-                <AvatarFallback className="text-black">
+                <AvatarFallback className="">
                   <User className="h-5 w-5" />
                 </AvatarFallback>
               </Avatar>

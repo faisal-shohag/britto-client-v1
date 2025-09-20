@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, User, Mail, Phone, MapPin, GraduationCap, Users, Lock, Image } from "lucide-react";
+import { Loader2, User, Mail, Phone, MapPin, GraduationCap, Users } from "lucide-react";
 
 const AddUser = () => {
     const [formData, setFormData] = useState({
@@ -114,21 +114,21 @@ const AddUser = () => {
     };
 
     return (
-        <div className="min-h-screen p-4 flex items-center justify-center">
+        <div className="flex items-center justify-center">
             <Card className="w-full max-w-2xl shadow-xl border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
                 <CardHeader className="space-y-2 text-center pb-8">
-                    <div className="mx-auto w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-2">
+                    <div className="mx-auto w-12 h-12 bg-gradient-to-r from-pink-500 to-red-600 rounded-full flex items-center justify-center mb-2">
                         <User className="w-6 h-6 text-white" />
                     </div>
                     <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-                        Add New User
+                     রেজিস্ট্রেশন
                     </CardTitle>
                     <p className="text-gray-600 dark:text-gray-400">
-                        Create a new user account with their details
+                       তোমার ইনফরমেশন দিয়ে নিচের ফর্মটি পূরণ করো।
                     </p>
                 </CardHeader>
 
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-5">
                     {message.content && (
                         <Alert className={`${
                             message.type === 'success' 
@@ -151,7 +151,7 @@ const AddUser = () => {
                             <div className="space-y-2">
                                 <Label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                     <User className="w-4 h-4" />
-                                    Name *
+                                    নাম *
                                 </Label>
                                 <Input
                                     id="name"
@@ -169,7 +169,7 @@ const AddUser = () => {
                             <div className="space-y-2">
                                 <Label htmlFor="phone" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                     <Phone className="w-4 h-4" />
-                                    Phone *
+                                    ফোন নম্বর *
                                 </Label>
                                 <Input
                                     id="phone"
@@ -187,7 +187,7 @@ const AddUser = () => {
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                     <Mail className="w-4 h-4" />
-                                    Email
+                                    ইমেইল
                                 </Label>
                                 <Input
                                     id="email"
@@ -201,7 +201,7 @@ const AddUser = () => {
                             </div>
 
                             {/* Password - Optional */}
-                            <div className="space-y-2">
+                            {/* <div className="space-y-2 ">
                                 <Label htmlFor="password" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                     <Lock className="w-4 h-4" />
                                     Password
@@ -215,17 +215,15 @@ const AddUser = () => {
                                     className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                                     placeholder="Enter password"
                                 />
-                            </div>
-                        </div>
+                            </div> */}
 
-                        {/* Group - Required */}
-                        <div className="space-y-2">
+                              <div className="space-y-2">
                             <Label htmlFor="group" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                 <Users className="w-4 h-4" />
                                 Group *
                             </Label>
-                            <Select onValueChange={handleSelectChange} value={formData.group}>
-                                <SelectTrigger className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
+                            <Select onValueChange={handleSelectChange} value={formData.group}     defaultValue={"HUMANITY"}>
+                                <SelectTrigger className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 w-full">
                                     <SelectValue placeholder="Select a group" />
                                 </SelectTrigger>
                                 <SelectContent className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
@@ -233,6 +231,7 @@ const AddUser = () => {
                                         <SelectItem 
                                             key={option.value} 
                                             value={option.value}
+                                        
                                             className="focus:bg-blue-50 dark:focus:bg-blue-900/50"
                                         >
                                             {option.label}
@@ -242,6 +241,10 @@ const AddUser = () => {
                             </Select>
                         </div>
 
+                        </div>
+
+                        {/* Group - Required */}
+                      
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* College - Optional */}
                             <div className="space-y-2">
@@ -261,7 +264,7 @@ const AddUser = () => {
                             </div>
 
                             {/* Picture URL - Optional */}
-                            <div className="space-y-2">
+                            {/* <div className="space-y-2">
                                 <Label htmlFor="picture" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                     <Image className="w-4 h-4" />
                                     Picture URL
@@ -275,11 +278,9 @@ const AddUser = () => {
                                     className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                                     placeholder="Enter picture URL"
                                 />
-                            </div>
-                        </div>
+                            </div> */}
 
-                        {/* Address - Optional */}
-                        <div className="space-y-2">
+                                <div className="space-y-2">
                             <Label htmlFor="address" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                 <MapPin className="w-4 h-4" />
                                 Address
@@ -294,12 +295,16 @@ const AddUser = () => {
                                 placeholder="Enter full address"
                             />
                         </div>
+                        </div>
+
+                        {/* Address - Optional */}
+                    
 
                         <div className="flex gap-4 pt-6">
                             <Button
                                 onClick={handleSubmit}
                                 disabled={isLoading}
-                                className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-2.5 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                className="flex-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-2.5 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
                                 {isLoading ? (
                                     <>
@@ -309,7 +314,7 @@ const AddUser = () => {
                                 ) : (
                                     <>
                                         <User className="mr-2 h-4 w-4" />
-                                        Create User
+                                   সাবমিট
                                     </>
                                 )}
                             </Button>

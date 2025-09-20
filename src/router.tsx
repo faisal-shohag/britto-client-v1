@@ -21,7 +21,7 @@ import ExamAnswerSheet from "./pages/free-exam-pages/user-exam/ExamAnswerSheet";
 import ExamDetails from "./pages/free-exam-pages/user-exam/ExamDetails";
 import Rank from "./pages/free-exam-pages/pages/Rank";
 import Routine from "./pages/free-exam-pages/pages/Routine";
-
+import Profile from "./pages/free-exam-pages/pages/Profile"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -93,6 +93,14 @@ export const router = createBrowserRouter([
         element: (
           <FreeExamPrivateRoute>
             <Routine />
+          </FreeExamPrivateRoute>
+        ),
+      },
+           {
+        path: "profile",
+        element: (
+          <FreeExamPrivateRoute>
+            <Profile />
           </FreeExamPrivateRoute>
         ),
       },

@@ -119,13 +119,13 @@ const questionsAPI = {
 };
 
 // Question Hooks
-export const useQuestions = (filters?: QuestionFilters) => {
-  return useQuery({
-    queryKey: ['questions', filters],
-    queryFn: () => questionsAPI.getQuestions(filters),
-    select: (data) => data.data.data as QuestionResponse,
-  });
-};
+// export const useQuestions = (filters?: QuestionFilters) => {
+//   return useQuery({
+//     queryKey: ['questions', filters],
+//     queryFn: () => questionsAPI.getQuestions(filters),
+//     select: (data) => data.data.data as QuestionResponse,
+//   });
+// };
 
 export const useQuestion = (id: number) => {
   return useQuery({
@@ -152,7 +152,7 @@ export const useCreateQuestion = () => {
   return useMutation({
     mutationFn: questionsAPI.createQuestion,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['questions'] });
+      queryClient.invalidateQueries({ queryKey: ['questions', ] });
       toast.success('Question created successfully!');
     },
     onError: (error: any) => {

@@ -5,23 +5,22 @@ import NavBar from "@/pages/free-exam-pages/components/NavBar";
 import { Outlet, useLocation } from "react-router";
 
 const FreeExamLayout = () => {
-    const location = useLocation()
-
-
-
+  const location = useLocation();
   return (
     <div>
-    
       <div className="max-w-7xl mx-auto px-1">
-         {location.pathname.includes('playground') ? null:<NavBar/>} 
-    <div className="pt-3 pb-[100px]"><Outlet /></div>
+        {location.pathname.includes("playground") ? null : <NavBar />}
+        <div className="pt-3 pb-[100px]">
+          <Outlet />
+        </div>
       </div>
-      <Toaster/>
+      <Toaster />
 
-      {location.pathname.includes('playground') ? null:<BottomNavigationBar/>} 
+      {location.pathname.includes("playground") ? null : (
+        <BottomNavigationBar />
+      )}
     </div>
   );
 };
 
 export default FreeExamLayout;
-

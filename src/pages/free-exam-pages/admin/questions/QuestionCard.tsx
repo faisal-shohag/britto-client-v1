@@ -9,7 +9,7 @@ import {
   Edit, 
   Trash2, 
   Eye, 
-  BookOpen,
+
   CheckCircle2,
   Clock,
   Target,
@@ -62,15 +62,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   compact = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(!compact);
-  const [showAllOptions, setShowAllOptions] = useState(false);
 
   const correctOption = question.options.find(opt => opt.isCorrect);
   const difficultyInfo = question.difficulty ? difficultyConfig[question.difficulty] : null;
-  const optionsToShow = showAllOptions ? question.options : question.options.slice(0, 2);
+
 
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 bg-zinc-900/50 border-zinc-800 hover:border-zinc-700">
-      <CardHeader className="pb-3">
+      <CardHeader className="">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3 flex-1">
             <Avatar className="h-10 w-10 border-2 border-zinc-700 shrink-0">
@@ -129,6 +128,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                     {difficultyInfo.label}
                   </Badge>
                 )}
+
+                  <span className='text-xs'>{question._count?.examQuestions || 0} exams</span>
                 
                 {question.subject && (
                   <Badge variant="secondary" className="bg-zinc-800 text-zinc-300 text-xs">
@@ -153,9 +154,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         </div>
       </CardHeader>
 
-      <CardContent className="pb-4">
+      <CardContent className="">
         {/* Question Image */}
-        {question.image && (
+        {/* {question.image && (
           <div className="mb-4">
             <img 
               src={question.image} 
@@ -163,22 +164,22 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               className="w-full max-w-sm mx-auto rounded-lg border border-zinc-700"
             />
           </div>
-        )}
+        )} */}
 
         {/* Question Stats */}
-        <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+        {/* <div className="grid grid-cols-2 gap-4 text-sm mb-4">
           <div className="flex items-center gap-2 text-zinc-400">
             <Target className="h-4 w-4" />
             <span>{question.options.length} options</span>
           </div>
           <div className="flex items-center gap-2 text-zinc-400">
             <BookOpen className="h-4 w-4" />
-            <span>{question._count?.examQuestions || 0} exams</span>
+          
           </div>
-        </div>
+        </div> */}
 
         {/* Options Section */}
-        {showOptions && question.options.length > 0 && (
+        
           <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
             <CollapsibleTrigger asChild>
               <Button 
@@ -195,7 +196,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             </CollapsibleTrigger>
             
             <CollapsibleContent className="mt-3 space-y-2">
-              {optionsToShow.map((option, index) => (
+              {question.options.map((option, index) => (
                 <div 
                   key={option.id}
                   className={`p-3 rounded-lg border transition-colors ${
@@ -243,7 +244,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 </div>
               ))}
               
-              {question.options.length > 2 && (
+              {/* {question.options.length > 2 && (
                 <Button
                   variant="ghost"
                   size="sm"
@@ -252,10 +253,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 >
                   {showAllOptions ? 'Show Less' : `Show ${question.options.length - 2} More Options`}
                 </Button>
-              )}
+              )} */}
             </CollapsibleContent>
           </Collapsible>
-        )}
+        
 
         {/* Explanation */}
         {showExplanation && question.explanation && (

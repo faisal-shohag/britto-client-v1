@@ -1,8 +1,8 @@
 import { use, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Crown, Trophy, Medal, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '@/lib/api';
-
+import { FaCrown, FaTrophy, FaMedal  } from "react-icons/fa6";
 // Shadcn UI imports
 import { Button } from '@/components/ui/button';
 // import { Input } from '@/components/ui/input';
@@ -14,6 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '../components/Splash';
 import { FreeUserContext } from '@/context/FreeUser.context';
+
 
 
 // Custom hooks for API calls
@@ -49,6 +50,8 @@ const useMyRank = (userId) => {
     staleTime: 10 * 60 * 1000, // 10 minutes
   });
 };
+
+
 
 
 // const useLeaderboardStats = () => {
@@ -92,22 +95,21 @@ const Rank = () => {
   } = useGlobalLeaderboard(currentPage, 30);
 
   const {data:myRank, isLoading:myRankLoading} = useMyRank(user.id)
-
 //   const { data: statsData } = useLeaderboardStats();
 //   const { data: topPerformersData } = useTopPerformers(3, selectedGroup);
 
   const getRankIcon = (rank) => {
     switch (rank) {
       case 1:
-        return <Crown className="w-6 h-6 text-yellow-500" />;
+        return <FaCrown className="w-6 h-6 text-yellow-500" />;
       case 2:
-        return <Trophy className="w-6 h-6 text-gray-400" />;
+        return <FaTrophy className="w-6 h-6 text-orange-400" />;
       case 3:
-        return <Medal className="w-6 h-6 text-amber-600" />;
+        return <FaMedal className="w-6 h-6 text-amber-600" />;
       default:
         return (
           <div className="w-6 h-6 flex items-center justify-center">
-            <span className="text-sm font-bold text-gray-600">{rank}</span>
+            <span className="text-sm font-bold">{rank}</span>
           </div>
         );
     }
@@ -116,11 +118,11 @@ const Rank = () => {
   const getRankCardClass = (rank) => {
     switch (rank) {
       case 1:
-        return 'border-l-4 border-l-yellow-500 bg-gradient-to-r from-yellow-50 to-amber-50';
+        return 'border-l-4 border-l-yellow-500 bg-gradient-to-r from-yellow-50 dark:from-zinc-800 dark:to-zinc-900 to-amber-50  ';
       case 2:
-        return 'border-l-4 border-l-gray-400 bg-gradient-to-r from-gray-50 to-slate-50';
+        return 'border-l-4 border-l-red-400 bg-gradient-to-r from-red-50  to-pink-50  dark:from-zinc-800 dark:to-zinc-900 ';
       case 3:
-        return 'border-l-4 border-l-amber-600 bg-gradient-to-r from-amber-50 to-orange-50';
+        return 'border-l-4 border-l-amber-600 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-zinc-800 dark:to-zinc-900 ';
       default:
         return 'border-l-4 border-l-transparent hover:border-l-blue-200 hover:bg-blue-50/30 transition-colors';
     }
@@ -156,6 +158,8 @@ const Rank = () => {
 //     setSelectedGroup(group === 'all' ? '' : group);
 //     setCurrentPage(1);
 //   };
+
+
 
   if (error) {
     return (
@@ -346,7 +350,7 @@ const Rank = () => {
                       {/* Avatar */}
                       <Avatar className="w-7 h-7 text-xs">
                         <AvatarImage src={entry.user.picture} />
-                        <AvatarFallback>
+                        <AvatarFallback className='text-black dark:text-white'>
                           {getInitials(entry.user.name)}
                         </AvatarFallback>
                       </Avatar>

@@ -145,7 +145,10 @@ const ExamCard = ({ exam, loading, hasParticipated }: ExamCardProps) => {
   
 
       {status === "ended" && (
-        <div className="text-red-500 font-semibold text-lg">শেষ</div>
+        <div className="rounded-xl text-red-500">
+      <div>    শেষ</div>
+         <Link to={`/free/answersheet/exam/${exam.id}`}> <Button className="bg-gradient-to-r text-white from-red-600 to-pink-500">Answer Sheet</Button></Link>
+          </div>
       )}
 
       <div className="text-sm flex justify-center gap-2 border-t-2 my-1 pt-2 border-dotted">
