@@ -5,30 +5,47 @@ import { useParams } from "react-router";
 import { AnswerSheet } from "./answer-sheet";
 import { useExamAccess } from "@/hooks/free-exam-hooks/user-user-exams";
 import { Spinner } from "../components/Splash";
+import { useQuestionsByExam } from "@/hooks/free-exam-hooks/use-questions";
+import { AnswerSheetCommon } from "./answer-sheet-common";
 
 const ExamAnswerSheet = () => {
   const { id: examId } = useParams() as any;
   const { user } = use(FreeUserContext) as any;
   const { data, isLoading } = useUserAnswerSheet(user.id, examId);
+  const { data: examData, isLoading: questionLoading } =
+    useQuestionsByExam(examId);
   const { data: accessData, isLoading: accessLoading } = useExamAccess(
     examId,
     user.id
   );
 
-  if (isLoading || accessLoading) return <div>
-    <Spinner/>
-    Loading...</div>;
+  if (isLoading || accessLoading || questionLoading)
+    return (
+      <div className="flex justify-center flex-col items-center">
+        <Spinner />
+        উত্তরপত্র লোড হচ্ছে...
+      </div>
+    );
   const { answers } = data;
-  const { hasParticipated } = accessData;
-  console.log(accessData)
+  const { timeStatus, hasParticipated } = accessData;
+
+
 
   return (
     <div>
-      {hasParticipated ? 
+      {timeStatus.isAfterEnd && hasParticipated ? (
         <AnswerSheet answers={answers} />
-       : 
-        <div>তুমি এই এক্সাম টি দাও নি!</div>
-      }
+      ) : (
+        <>
+          {timeStatus.isAfterEnd && !hasParticipated ? (
+            <>
+            <AnswerSheetCommon data={examData}/>
+            </>
+          ) : (
+            <>এক্সামটি এখনো শেষ হয়নি!</>
+          )}
+        </>
+      )}
     </div>
   );
 };

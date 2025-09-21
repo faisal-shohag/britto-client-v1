@@ -160,7 +160,7 @@ const Rank = () => {
 //   };
 
 
-
+// console.log(leaderboardData)
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 p-4">
@@ -315,8 +315,8 @@ const Rank = () => {
         {/* Leaderboard Table */}
         <Card>
           <CardHeader>
-            <CardTitle className='text-center text-lg'>অবস্থান</CardTitle>
-            <div className='text-center border-b border-dashed pb-2 text-sm'>তোমার বর্তমান অবস্থান: {myRank?.rank} </div>
+            <CardTitle className='text-center text-lg'>Ranks</CardTitle>
+            <div className='text-center border-b justify-center border-dashed pb-2 text-sm flex items-center gap-2'>তোমার বর্তমান অবস্থান: {myRankLoading ? <Spinner/> : myRank?.rank} </div>
           </CardHeader>
           <CardContent className="p-0">
             {(isLoading || myRankLoading) ? (
@@ -384,12 +384,12 @@ const Rank = () => {
                       </div> */}
 
                       {/* Total Score */}
-                      {/* <div className="text-right min-w-0">
+                      <div className="text-right min-w-0">
                         <div className="text-lg font-bold text-blue-600">
                           {entry.totalMarks}
                         </div>
-                        <div className="text-xs text-gray-500">Total Score</div>
-                      </div> */}
+                        <div className="text-xs text-gray-500">Total Marks</div>
+                      </div>
                     </div>
                   ))}
                 </div>

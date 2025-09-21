@@ -1,7 +1,7 @@
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { TbTarget, TbTargetArrow } from "react-icons/tb";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { FaCalendarDays, FaRegCircleUser, FaCircleUser   } from "react-icons/fa6";
+import { FaCalendarDays,    } from "react-icons/fa6";
 import { NavLink, useLocation } from "react-router";
 
 const BottomNavigationBar = () => {
@@ -15,7 +15,7 @@ const BottomNavigationBar = () => {
     { path: "/free", title: "Home", icon: GoHome, activeIcon: GoHomeFill },
     { path: "rank", title: "Rank", icon: TbTarget, activeIcon: TbTargetArrow },
     { path: "routine", title: "Routine", icon: FaRegCalendarAlt, activeIcon: FaCalendarDays },
-    { path: "profile", title: "Profile", icon: FaRegCircleUser, activeIcon: FaCircleUser  },
+    // { path: "profile", title: "Profile", icon: FaRegCircleUser, activeIcon: FaCircleUser  },
   ];
 
   return (

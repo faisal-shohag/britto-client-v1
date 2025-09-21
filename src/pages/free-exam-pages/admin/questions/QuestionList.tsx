@@ -54,7 +54,9 @@ export const QuestionList: React.FC<QuestionListProps> = ({
     const handleCreateQuestion = (data: CreateQuestionData) => {
       createQuestionMutation.mutate(
         { ...data }, // Include examId in the data
+        
         {
+          
           onSuccess: async (response) => {
             const { data } = response.data;
             await api.post(`/freeExam/exams/${examId}/questions/${data.id}`);
@@ -65,6 +67,7 @@ export const QuestionList: React.FC<QuestionListProps> = ({
         }
       );
     };
+    
 
     if(isLoading) {
       return (
