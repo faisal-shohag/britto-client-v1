@@ -148,11 +148,11 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
               <CardTitle className="text-xl dark:text-zinc-100 leading-relaxed mt-4">
                 {answer.question.question}
               </CardTitle>
-              {answer.question.description && (
+              {/* {answer.question.description && (
                 <p className="dark:text-zinc-400 mt-2">
                   {answer.question.description}
                 </p>
-              )}
+              )} */}
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Question Image */}
@@ -215,11 +215,11 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
                                   <CheckCircle className="h-4 w-4 text-green-400 ml-2" />
                                 )}
                               </div>
-                              {option.description && (
+                              {/* {option.description && (
                                 <div className="text-sm text-zinc-400 mt-2">
                                   {option.description}
                                 </div>
-                              )}
+                              )} */}
                               {option.image && (
                                 <div className="mt-3">
                                   <img
@@ -261,11 +261,11 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
                               <CheckCircle className="h-4 w-4 text-green-400 ml-2" />
                             )}
                           </div>
-                          {answer.option.description && (
+                          {/* {answer.option.description && (
                             <div className="text-sm text-zinc-400 mt-2">
                               {answer.option.description}
                             </div>
-                          )}
+                          )} */}
                           {answer.option.image && (
                             <div className="mt-3">
                               <img

@@ -30,10 +30,10 @@ const ExamAnswerSheet = () => {
   const { timeStatus, hasParticipated } = accessData;
 
 
-
+// console.log(accessData)
   return (
     <div>
-      {timeStatus.isAfterEnd && hasParticipated ? (
+      {hasParticipated ? (
         <AnswerSheet answers={answers} />
       ) : (
         <>

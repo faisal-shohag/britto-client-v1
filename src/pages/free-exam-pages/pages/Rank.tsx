@@ -385,10 +385,10 @@ const Rank = () => {
 
                       {/* Total Score */}
                       <div className="text-right min-w-0">
-                        <div className="text-lg font-bold text-blue-600">
+                        <div className={`text-lg font-bold text-blue-600 ${entry.user.id === user.id ? 'text-white':'text-blue-600'}`}>
                           {entry.totalMarks}
                         </div>
-                        <div className="text-xs text-gray-500">Total Marks</div>
+                        <div className={`text-xs ${entry.user.id === user.id ? 'text-white':'text-gray-500'}`}>Total Marks</div>
                       </div>
                     </div>
                   ))}

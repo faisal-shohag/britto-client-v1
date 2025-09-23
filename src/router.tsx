@@ -22,6 +22,8 @@ import ExamDetails from "./pages/free-exam-pages/user-exam/ExamDetails";
 import Rank from "./pages/free-exam-pages/pages/Rank";
 import Routine from "./pages/free-exam-pages/pages/Routine";
 import Profile from "./pages/free-exam-pages/pages/Profile"
+import Register from "./pages/free-exam-pages/pages/Register";
+import BulkQuestionUploader from "./pages/free-exam-pages/admin/questions/AddBulkQuestion";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +57,10 @@ export const router = createBrowserRouter([
       {
         path: "login",
         Component: Login,
+      },
+       {
+        path: "register",
+        Component: Register,
       },
          {
         path: "exam/:id",
@@ -141,6 +147,14 @@ export const router = createBrowserRouter([
         element: (
           <FreeExamAdminPrivateRoute>
             <QuestionByExam />
+          </FreeExamAdminPrivateRoute>
+        ),
+      },
+            {
+        path: "admin/add-bulk-questions",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <BulkQuestionUploader />
           </FreeExamAdminPrivateRoute>
         ),
       },

@@ -14,7 +14,7 @@ import {
 import { useTheme } from "@/hooks/use-theme";
 import { Link } from "react-router";
 
-const UserAvatar = ({ name, college, logout, role, gender }) => {
+const UserAvatar = ({ name, college, logout, role }) => {
   const { setTheme } = useTheme();
 
   return (
@@ -23,8 +23,8 @@ const UserAvatar = ({ name, college, logout, role, gender }) => {
         <DropdownMenuTrigger>
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={gender === "FEMALE" ? "https://i.postimg.cc/QMg4YZcV/image.png" : "https://as1.ftcdn.net/jpg/14/40/71/64/1000_F_1440716477_3RsekVycxB6IsjouUXSq9MZG9d9sDAPj.jpg"} />
-              <AvatarFallback>{name[0]}</AvatarFallback>
+              <AvatarImage/>
+              <AvatarFallback className="bg-gradient-to-r from-pink-500 to-red-500 text-white border-2">{name[0]}</AvatarFallback>
             </Avatar>
 
             <div className=" text-left">
@@ -38,7 +38,7 @@ const UserAvatar = ({ name, college, logout, role, gender }) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>{name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+        <Link to={'profile'}>  <DropdownMenuItem>Profile</DropdownMenuItem></Link>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
@@ -72,6 +72,9 @@ const UserAvatar = ({ name, college, logout, role, gender }) => {
           </Link>
           <Link to={"admin/all-user"}>
             <DropdownMenuItem>All user</DropdownMenuItem>
+          </Link>
+             <Link to={"admin/add-bulk-questions"}>
+            <DropdownMenuItem>Add bulk Q</DropdownMenuItem>
           </Link>
           </>
         }

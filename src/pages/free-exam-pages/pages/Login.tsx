@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form";
 import api from "@/lib/api";
 import { use, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FreeUserContext } from "@/context/FreeUser.context";
 
 const FormSchema = z.object({
@@ -118,7 +118,7 @@ function Login() {
 
           <div className="text-sm">
             <span className="text-green-500">এখনো জয়েন হওনি? </span>
-            <a target="__blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdMiJzSZREoHy3pAxJO0sSZ40yrFpgSxVhWF3If__NXwcntFQ/viewform"><span className="text-pink-500 underline">এখানে ক্লিক করে তোমার ইনফো দাও! </span></a>
+           <Link to={'/free/register'} className="text-pink-500 underline"> রেজিস্টার করো</Link>
           </div>
         </form>
       </Form>

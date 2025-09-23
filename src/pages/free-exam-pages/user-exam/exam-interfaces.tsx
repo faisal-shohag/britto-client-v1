@@ -341,11 +341,11 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                       )}
                   </div>
                   
-                  {question.question.description && (
+                  {/* {question.question.description && (
                     <p className="  leading-relaxed">
                       {question.question.description}
                     </p>
-                  )}
+                  )} */}
                 </CardHeader>
 
                 <CardContent className="space-y-2">
@@ -397,11 +397,11 @@ export const ExamInterface: React.FC<ExamInterfaceProps> = ({
                                     {option.optionText}
                                   </div>
                                   
-                                  {option.description && (
+                                  {/* {option.description && (
                                     <div className={`text-sm mt-2 ${isSelected ? 'text-blue-600 dark:text-blue-400' : 'dark:text-zinc-400 text-gray-600'}`}>
                                       {option.description}
                                     </div>
-                                  )}
+                                  )} */}
                                   
                                   {option.image && (
                                     <div className="mt-3">

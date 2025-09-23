@@ -84,9 +84,9 @@ export const AnswerSheetCommon: React.FC<AnswerSheetProps> = ({ data }) => {
               <CardTitle className=" dark:text-zinc-100 leading-relaxed mt-4">
                {questions.findIndex(a => a.id === answer.id) + 1}. {answer.question.question}
               </CardTitle>
-              {answer.question.description && (
+              {/* {answer.question.description && (
                 <p className="dark:text-zinc-400 mt-2">{answer.question.description}</p>
-              )}
+              )} */}
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Question Image */}
@@ -153,9 +153,9 @@ export const AnswerSheetCommon: React.FC<AnswerSheetProps> = ({ data }) => {
                                   <CheckCircle className="h-4 w-4 text-green-400 ml-2" />
                                 )}
                               </div>
-                              {option.description && (
+                              {/* {option.description && (
                                 <div className="text-sm text-zinc-400 mt-2">{option.description}</div>
-                              )}
+                              )} */}
                               {option.image && (
                                 <div className="mt-3">
                                   <img
@@ -199,11 +199,11 @@ export const AnswerSheetCommon: React.FC<AnswerSheetProps> = ({ data }) => {
                               <CheckCircle className="h-4 w-4 text-green-400 ml-2" />
                             )}
                           </div>
-                          {answer.selectedOption.description && (
+                          {/* {answer.selectedOption.description && (
                             <div className="text-sm text-zinc-400 mt-2">
                               {answer.selectedOption.description}
                             </div>
-                          )}
+                          )} */}
                           {answer.selectedOption.image && (
                             <div className="mt-3">
                               <img

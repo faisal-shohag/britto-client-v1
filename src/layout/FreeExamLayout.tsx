@@ -13,12 +13,13 @@ const FreeExamLayout = () => {
         <div className="pt-3 pb-[100px]">
           <Outlet />
         </div>
+          {location.pathname.includes("playground") ? null : (
+        <BottomNavigationBar />
+      )}
       </div>
       <Toaster />
 
-      {location.pathname.includes("playground") ? null : (
-        <BottomNavigationBar />
-      )}
+    
     </div>
   );
 };

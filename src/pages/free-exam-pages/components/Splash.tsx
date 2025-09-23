@@ -2,7 +2,7 @@
 const Splash = () => {
   return (
     <div>
-      <div className="flex flex-col items-center justify-center h-svh bg-white dark:bg-zinc-900 fixed left-0 top-0 w-full">
+      <div className="flex flex-col items-center justify-center h-svh bg-white dark:bg-zinc-900 fixed z-50 left-0 top-0 w-full">
         <img
           className="h-[70px] w-[70px]"
           src="https://i.postimg.cc/TYpCjqyD/image.png"

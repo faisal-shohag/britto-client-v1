@@ -65,7 +65,7 @@ const HomeExamCard = () => {
 
   if (isLoading) {
     return (
-      <div className="p-5 bg-[rgba(255,255,255,0.05)] backdrop-blur-sm rounded-lg text-center border relative">
+      <div className="p-5 bg-white dark:bg-zinc-900 rounded-lg text-center border relative">
         <Spinner/>
        এক্সাম লোড হচ্ছে...
       </div>
