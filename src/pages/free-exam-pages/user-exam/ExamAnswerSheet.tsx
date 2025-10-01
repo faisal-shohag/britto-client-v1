@@ -8,10 +8,10 @@ import { Spinner } from "../components/Splash";
 import { useQuestionsByExam } from "@/hooks/free-exam-hooks/use-questions";
 import { AnswerSheetCommon } from "./answer-sheet-common";
 
-const ExamAnswerSheet = () => {
-  const { id: examId } = useParams() as any;
+const ExamAnswerSheet = ({isUser}) => {
+  const { id: examId, userId } = useParams() as any;
   const { user } = use(FreeUserContext) as any;
-  const { data, isLoading } = useUserAnswerSheet(user.id, examId);
+  const { data, isLoading } = useUserAnswerSheet(isUser? userId : user.id, examId);
   const { data: examData, isLoading: questionLoading } =
     useQuestionsByExam(examId);
   const { data: accessData, isLoading: accessLoading } = useExamAccess(
@@ -26,15 +26,19 @@ const ExamAnswerSheet = () => {
         উত্তরপত্র লোড হচ্ছে...
       </div>
     );
-  const { answers } = data;
+
+
   const { timeStatus, hasParticipated } = accessData;
 
+  if(user.role ==="ADMIN" && isUser){
+    return  <AnswerSheet examData={data} />
+  }
 
 // console.log(accessData)
   return (
     <div>
       {hasParticipated ? (
-        <AnswerSheet answers={answers} />
+        <AnswerSheet examData={data} />
       ) : (
         <>
           {timeStatus.isAfterEnd && !hasParticipated ? (

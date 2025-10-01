@@ -11,10 +11,11 @@ import {
 } from 'lucide-react';
 
 interface AnswerSheetProps {
-  answers: any;
+  examData: any;
 }
 
-export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
+export const AnswerSheet: React.FC<AnswerSheetProps> = ({ examData }) => {
+   const {answers, exam} = examData
   // const [showExplanations, setShowExplanations] = useState(false);
 
   const [filter, setFilter] = useState<'all' | 'correct' | 'wrong' | 'unanswered'>('all');
@@ -57,7 +58,7 @@ export const AnswerSheet: React.FC<AnswerSheetProps> = ({ answers }) => {
       <Card className="dark:bg-zinc-900/50 bg-white dark:border-zinc-800">
         <CardHeader>
           <div className="text-center">
-            <CardTitle className="dark:text-zinc-100 text-lg">উত্তরপত্র</CardTitle>
+            <CardTitle className="dark:text-zinc-100 text-lg">উত্তরপত্র - {exam.title}</CardTitle>
 
             <div>তুমি মার্ক <span>{stats.correct}</span> পেয়েছো!</div>
             {/* <Button

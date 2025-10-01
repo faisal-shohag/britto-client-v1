@@ -25,6 +25,8 @@ import Profile from "./pages/free-exam-pages/pages/Profile"
 import Register from "./pages/free-exam-pages/pages/Register";
 import BulkQuestionUploader from "./pages/free-exam-pages/admin/questions/AddBulkQuestion";
 import BrittoAsk from "./pages/free-exam-pages/pages/BrittoAsk";
+import Privacy from "./pages/privacy/privacy";
+import PackageDetails from "./pages/free-exam-pages/pages/PackageDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +36,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path: '/privacy',
+        Component: Privacy
+      }
     ],
   },
 
@@ -68,6 +74,14 @@ export const router = createBrowserRouter([
         element: (
           <FreeExamPrivateRoute>
             <ExamDetails />
+          </FreeExamPrivateRoute>
+        ),
+      },
+        {
+        path: "package/:id",
+        element: (
+          <FreeExamPrivateRoute>
+            <PackageDetails />
           </FreeExamPrivateRoute>
         ),
       },
@@ -123,7 +137,15 @@ export const router = createBrowserRouter([
         path: "answersheet/exam/:id",
         element: (
           <FreeExamPrivateRoute>
-            <ExamAnswerSheet />
+            <ExamAnswerSheet isUser={false}/>
+          </FreeExamPrivateRoute>
+        ),
+      },
+       {
+        path: "user-answersheet/:userId/exam/:id",
+        element: (
+          <FreeExamPrivateRoute>
+            <ExamAnswerSheet isUser={true}/>
           </FreeExamPrivateRoute>
         ),
       },

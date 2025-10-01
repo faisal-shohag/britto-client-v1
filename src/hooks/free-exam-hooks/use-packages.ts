@@ -73,6 +73,7 @@ export const usePackagesByUser = (userId: number) => {
     queryFn: () => packagesAPI.getPackagesByUser(userId),
     select: (data) => data.data.data as Package[],
     enabled: !!userId,
+    staleTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 

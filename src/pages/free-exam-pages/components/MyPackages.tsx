@@ -2,30 +2,47 @@ import { usePackagesByUser } from '@/hooks/free-exam-hooks/use-packages';
 import { bnNumber } from '@/lib/bnNumbers';
 import { BsFillBackpackFill } from "react-icons/bs";
 import { Spinner } from './Splash';
-const MyPackages = ({userId}: {userId: number}) => {
-    const { data: packages, isLoading } = usePackagesByUser(userId);
+import useFreeUser from '@/hooks/free-exam-hooks/use-free-user';
+import { ChevronRight } from 'lucide-react';
+import { Link } from 'react-router';
+const MyPackages = () => {
+    const user = useFreeUser()
+    const { data: packages, isLoading } = usePackagesByUser(user.id);
     
     if (isLoading) return <div>
        <Spinner/>
     </div>;
+
     
     return (
-        <div className='space-y-2'>
-            <div className='flex items-center gap-1 bg-gradient-to-r from-red-500 to-pink-600 text-white px-2 py-1 rounded-xl'>
+        <div className='space-y-2 bg-white p-3 dark:bg-zinc-900 border rounded-xl'>
+            <div className='flex items-center gap-1 bg-gradient-to-r px-2 py-1 rounded-xl'>
                 <span><BsFillBackpackFill /></span>
                 <h1>আমার এক্সাম প্যাকেজ</h1>
             </div>
-         <div className='grid grid-cols-2 '>
+         <div className=''>
                {packages?.map(pkg => (
-                <div className=' border p-3 rounded-xl text-center bg-gradient-to-r from-indigo-500 
-                via-purple-500 to-pink-600 text-white flex flex-col items-center gap-2' key={pkg.id}>
-                    <h3 className='font-semibold'>{pkg.title}</h3>
-                    <div className='text-xs bg-gradient-to-r from-red-500 to-pink-600 rounded-full w-[100px]'>{pkg.group}</div>
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>পরীক্ষা: ১৪টি</span> |
+                <Link key={pkg.id} to={`package/${pkg.id}`}>
+                <div className='relative bg-white dark:bg-zinc-900 border  rounded-xl
+               flex justify-between items-center pr-2' >
+              <div className='flex items-center gap-2'>
+                  <div>
+                    <img className='w-[50px] h-[50px]  rounded-xl border' src={pkg.image} alt={pkg.title}/>
+                </div>
+                  <div>
+                      <h3 className='font-semibold text-sm'>{pkg.title}</h3>
+                      <div className='flex items-center gap-2 text-xs'>
+                        <span>পরীক্ষা: {bnNumber(pkg._count?.freeExams)} টি</span> |
                         <span>অংশগ্রহণ: {bnNumber(pkg?._count?.userPackages)} জন</span>
                     </div>
+                  </div>  
+                </div> 
+
+                  <div className='float-right'>
+                    <ChevronRight/>
+                    </div>                 
                 </div>
+                </Link>
             ))}
          </div>
         </div>

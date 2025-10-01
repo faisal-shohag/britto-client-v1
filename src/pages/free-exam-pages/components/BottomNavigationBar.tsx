@@ -1,8 +1,8 @@
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { TbTarget, TbTargetArrow } from "react-icons/tb";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { FaCalendarDays, FaCircleUser, FaRegCircleUser,    } from "react-icons/fa6";
+import {FaCircleUser, FaRegCircleUser,    } from "react-icons/fa6";
 import { NavLink, useLocation } from "react-router";
+import { SiSparkpost } from "react-icons/si";
 
 const BottomNavigationBar = () => {
   const location = useLocation();
@@ -14,7 +14,8 @@ const BottomNavigationBar = () => {
   const navData = [
     { path: "/free", title: "Home", icon: GoHome, activeIcon: GoHomeFill },
     { path: "rank", title: "Rank", icon: TbTarget, activeIcon: TbTargetArrow },
-    { path: "routine", title: "Routine", icon: FaRegCalendarAlt, activeIcon: FaCalendarDays },
+       { path: "ask", title: "সবজান্তা", icon: SiSparkpost, activeIcon: SiSparkpost },
+ 
     { path: "profile", title: "Profile", icon: FaRegCircleUser, activeIcon: FaCircleUser  },
   ];
 

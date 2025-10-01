@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Link } from 'react-router';
+import { FaCalendarDays } from 'react-icons/fa6';
 
 interface RecentExamsProps {
   limit?: number;
@@ -82,7 +83,12 @@ export const RecentExams: React.FC<RecentExamsProps> = ({
     <Card className="dark:bg-zinc-900/50 dark:border-zinc-800">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="dark:text-zinc-100">পরীক্ষাসমূহ</CardTitle>
+          <CardTitle className="dark:text-zinc-100 flex justify-between w-full items-center">
+                 <div>পরীক্ষাসমূহ ({data.exams.length})</div>
+            <Button className='bg-pink-600'>
+              <Link className='flex gap-2' to={'routine'}><FaCalendarDays/> রুটিন</Link>
+            </Button>
+          </CardTitle>
           {onViewAll && data.exams.length > 0 && (
             <Button 
               variant="ghost" 

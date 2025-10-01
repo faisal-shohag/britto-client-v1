@@ -1,8 +1,8 @@
 
 // import { use } from "react";
 import HomeExamCard from "../components/HomeExamCard";
-import HomeMyExamsCard from "../components/HomeMyExamsCard";
-// import MyPackages from "../components/MyPackages";
+// import HomeMyExamsCard from "../components/HomeMyExamsCard";
+import MyPackages from "../components/MyPackages";
 // import { FreeUserContext } from "@/context/FreeUser.context";
 
 const FreeHome = () => {
@@ -11,8 +11,9 @@ const FreeHome = () => {
     return (
         <div className="space-y-5">
             <HomeExamCard/>
+            <MyPackages/>
 
-            <HomeMyExamsCard/>
+            {/* <HomeMyExamsCard/> */}
 
         </div>
     );
