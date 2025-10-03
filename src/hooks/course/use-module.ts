@@ -5,16 +5,16 @@ import { toast } from "sonner";
 
 const moduleApi = {
   createModule: (data: any) => {
-    return api.post("/course/create-module", data);
+    return api.post("/courses/create-module", data);
   },
-  getModuleByCourseId: (courseId: number) => {
-    return api.get(`/courses/modules/course/${courseId}`);
+  getModuleByCourseId: (courseId: number, content?:string) => {
+    return api.get(`/courses/modules/course/${courseId}?content=${content}`);
   },
   updateModule: (id: number, data: any) => {
-    return api.put(`/course/module/${id}`, data);
+    return api.put(`/courses/module/${id}`, data);
   },
   deleteModule: (id: number) => {
-    return api.delete(`/course/module/${id}`);
+    return api.delete(`/courses/module/${id}`);
   },
 };
 
@@ -31,18 +31,19 @@ export const useCreateModule = () => {
   });
 };
 
-export const useGetModuleByCourseId = (courseId: number) => {
+export const useGetModuleByCourseId = (courseId: number, content?:string) => {
   return useQuery({
     queryKey: ["modules", courseId],
-    queryFn: () => moduleApi.getModuleByCourseId(courseId),
+    queryFn: () => moduleApi.getModuleByCourseId(courseId, content),
     enabled: !!courseId,
+    select: (data) => data.data.data
   });
 };
 
 export const useUpdateModule = () => {
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: any }) =>
-      moduleApi.updateModule(id, data),
+    mutationFn: ({ moduleId, data }: { moduleId: number; data: any }) =>
+      moduleApi.updateModule(moduleId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["modules"] });
       toast.success("Module updated successfully!");

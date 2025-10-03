@@ -76,6 +76,9 @@ const UserAvatar = ({ name, college, logout, role }) => {
              <Link to={"admin/add-bulk-questions"}>
             <DropdownMenuItem>Add bulk Q</DropdownMenuItem>
           </Link>
+            <Link to={"admin/courses"}>
+            <DropdownMenuItem>Courses</DropdownMenuItem>
+          </Link>
           </>
         }
 

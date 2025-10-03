@@ -11,7 +11,7 @@ const HomeCourseCard = () => {
 
   return (
     <div>
-      <h1 className="font-bold">Preparations</h1>
+      <h1 className="font-bold mb-2">Preparations</h1>
       <div className="grid md:grid-cols-4 gap-3 grid-cols-2">
         {courses.map((course) => {
           return <CourseCard key={course.id} course={course} />;

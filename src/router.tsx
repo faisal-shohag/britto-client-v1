@@ -28,6 +28,10 @@ import BrittoAsk from "./pages/free-exam-pages/pages/BrittoAsk";
 import Privacy from "./pages/privacy/privacy";
 import PackageDetails from "./pages/free-exam-pages/pages/PackageDetails";
 import CourseDetails from "./pages/free-exam-pages/pages/course/CourseDetails";
+import AllCourses from "./pages/free-exam-pages/admin/course/course/AllCourses";
+import Enrollments from "./pages/free-exam-pages/admin/course/course/Enrollments";
+import Modules from "./pages/free-exam-pages/admin/course/module/Modules";
+import Contents from "./pages/free-exam-pages/admin/course/content/Contents";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -212,6 +216,45 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
+      {
+        path: "admin/courses",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <AllCourses />
+          </FreeExamAdminPrivateRoute>
+        ),
+      },
+          {
+        path: "admin/enrollments/:courseId",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <Enrollments />
+          </FreeExamAdminPrivateRoute>
+        ),
+      },
+          {
+        path: "admin/modules/:courseId",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <Modules />
+          </FreeExamAdminPrivateRoute>
+        ),
+      },
+          {
+        path: "admin/modules/:courseId",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <Modules />
+          </FreeExamAdminPrivateRoute>
+        ),
+      },    {
+        path: "admin/contents/:moduleId",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <Contents />
+          </FreeExamAdminPrivateRoute>
+        ),
+      }
     ],
   },
 ]);

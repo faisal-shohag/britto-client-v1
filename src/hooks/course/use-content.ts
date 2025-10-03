@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const contentApi = {
-    createContent: (data: any) => api.post("/course/create-content", data),
+    createContent: (data: any) => api.post("/courses/create-content", data),
     getContentByModuleId: (moduleId: number) => api.get(`/courses/contents/module/${moduleId}`),
     updateContent: (id: number, data: any) => api.put(`/courses/content/${id}`, data),
     deleteContent: (id: number) => api.delete(`/courses/content/${id}`),
@@ -28,6 +28,7 @@ export const useGetContentByModuleId = (moduleId: number) => {
         queryKey: ["contents", moduleId],
         queryFn: () => contentApi.getContentByModuleId(moduleId),
         enabled: !!moduleId,
+        select: (data) => data.data.data,
     });
 };
 
