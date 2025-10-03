@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { X, ImageIcon, Send } from "lucide-react";
 import { SiSparkpost } from "react-icons/si";
 import clsx from "clsx";
-import Spinner from '@/pages/free-exam-pages/components/Splash'
+import {Spinner} from '@/pages/free-exam-pages/components/Splash.tsx'
 
 // --- GEMINI API Setup ---
 const gemini = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_KEY });
@@ -352,11 +352,6 @@ const BrittoAsk = () => {
                 <div className={`${loading && 'shimmer bg-gradient-to-t from-red-400 via-pink-500 to-pink-600 text-transparent bg-clip-text'} inline-block text-muted-foreground`}>
                   {loading ? "একটু অপেক্ষা করো... চিন্তা করছি!!" : "বৃত্ত সবজান্তা"}
                 </div>
-                {/* {isFlutterWebView() && (
-                  <div className="text-xs text-muted-foreground mt-2">
-                    {isFlutterReady ? "Flutter WebView (Native File Picker Active)" : "Flutter WebView (Initializing...)"}
-                  </div>
-                )} */}
               </div>
             )}
 
@@ -366,19 +361,7 @@ const BrittoAsk = () => {
               </div>
             )}
 
-            {/* Debug Information - Only show if there's debug info and no result */}
-            {/* {debugInfo && !result && process.env.NODE_ENV === 'development' && (
-              <div className="mt-4 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs font-mono whitespace-pre-wrap">
-                <strong>Debug Info:</strong><br />
-                {debugInfo}
-                <button 
-                  onClick={() => setDebugInfo("")}
-                  className="mt-2 text-blue-600 underline"
-                >
-                  Clear Debug
-                </button>
-              </div>
-            )} */}
+        
           </div>
           
           <div className="w-full left-0 bottom-17 bg-white dark:bg-zinc-800 border rounded-xl overflow-hidden fixed min-h-[70px]">

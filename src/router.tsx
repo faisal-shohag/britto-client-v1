@@ -27,6 +27,7 @@ import BulkQuestionUploader from "./pages/free-exam-pages/admin/questions/AddBul
 import BrittoAsk from "./pages/free-exam-pages/pages/BrittoAsk";
 import Privacy from "./pages/privacy/privacy";
 import PackageDetails from "./pages/free-exam-pages/pages/PackageDetails";
+import CourseDetails from "./pages/free-exam-pages/pages/course/CourseDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +69,12 @@ export const router = createBrowserRouter([
        {
         path: "register",
         Component: Register,
+      },
+      {
+        path:'preparation/:courseId',
+        element:  <FreeExamPrivateRoute>
+          <CourseDetails/>
+        </FreeExamPrivateRoute>
       },
          {
         path: "exam/:id",

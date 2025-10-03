@@ -1,15 +1,17 @@
-import useFreeUser from "@/hooks/free-exam-hooks/use-free-user";
-import { RecentExams } from "../admin/exams/RecentExams";
+// import useFreeUser from "@/hooks/free-exam-hooks/use-free-user";
+
 import { useParams } from "react-router";
-import { usePackage } from "@/hooks/free-exam-hooks/use-packages";
 import { bnNumber } from "@/lib/bnNumbers";
+import { ExamList } from "../admin/exams/PackageExamList";
+import { useExams } from "@/hooks/free-exam-hooks/use-exams";
+
 
 const PackageDetails = () => {
-  const user = useFreeUser();
+  // const user = useFreeUser();
   const { id: packageId } = useParams() as any;
-  const { data: pkg, isLoading } = usePackage(packageId) as any;
+  const { data, isLoading } = useExams({packageId, limit: 30, page: 1}) as any;
   if (isLoading) return <div>Loading...</div>;
-//   console.log(pkg);
+  const {pkg} = data
   return (
     <div>
       <div
@@ -24,7 +26,7 @@ const PackageDetails = () => {
         </div>
         </div>
       </div>
-      <RecentExams packageId={packageId} userId={user.id} />
+      <ExamList data={data}/>
     </div>
   );
 };
