@@ -21,7 +21,7 @@ import ExamAnswerSheet from "./pages/free-exam-pages/user-exam/ExamAnswerSheet";
 import ExamDetails from "./pages/free-exam-pages/user-exam/ExamDetails";
 import Rank from "./pages/free-exam-pages/pages/Rank";
 import Routine from "./pages/free-exam-pages/pages/Routine";
-import Profile from "./pages/free-exam-pages/pages/Profile"
+import Profile from "./pages/free-exam-pages/pages/Profile";
 import Register from "./pages/free-exam-pages/pages/Register";
 import BulkQuestionUploader from "./pages/free-exam-pages/admin/questions/AddBulkQuestion";
 import BrittoAsk from "./pages/free-exam-pages/pages/BrittoAsk";
@@ -32,6 +32,7 @@ import AllCourses from "./pages/free-exam-pages/admin/course/course/AllCourses";
 import Enrollments from "./pages/free-exam-pages/admin/course/course/Enrollments";
 import Modules from "./pages/free-exam-pages/admin/course/module/Modules";
 import Contents from "./pages/free-exam-pages/admin/course/content/Contents";
+import Quize from "./pages/free-exam-pages/admin/course/quiz/Quize";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -42,9 +43,9 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/privacy',
-        Component: Privacy
-      }
+        path: "/privacy",
+        Component: Privacy,
+      },
     ],
   },
 
@@ -70,17 +71,19 @@ export const router = createBrowserRouter([
         path: "login",
         Component: Login,
       },
-       {
+      {
         path: "register",
         Component: Register,
       },
       {
-        path:'preparation/:courseId',
-        element:  <FreeExamPrivateRoute>
-          <CourseDetails/>
-        </FreeExamPrivateRoute>
+        path: "preparation/:courseId",
+        element: (
+          <FreeExamPrivateRoute>
+            <CourseDetails />
+          </FreeExamPrivateRoute>
+        ),
       },
-         {
+      {
         path: "exam/:id",
         element: (
           <FreeExamPrivateRoute>
@@ -88,7 +91,7 @@ export const router = createBrowserRouter([
           </FreeExamPrivateRoute>
         ),
       },
-        {
+      {
         path: "package/:id",
         element: (
           <FreeExamPrivateRoute>
@@ -112,7 +115,7 @@ export const router = createBrowserRouter([
           </FreeExamPrivateRoute>
         ),
       },
-           {
+      {
         path: "ask",
         element: (
           <FreeExamPrivateRoute>
@@ -120,7 +123,7 @@ export const router = createBrowserRouter([
           </FreeExamPrivateRoute>
         ),
       },
-         {
+      {
         path: "rank",
         element: (
           <FreeExamPrivateRoute>
@@ -128,7 +131,7 @@ export const router = createBrowserRouter([
           </FreeExamPrivateRoute>
         ),
       },
-            {
+      {
         path: "routine",
         element: (
           <FreeExamPrivateRoute>
@@ -136,7 +139,7 @@ export const router = createBrowserRouter([
           </FreeExamPrivateRoute>
         ),
       },
-           {
+      {
         path: "profile",
         element: (
           <FreeExamPrivateRoute>
@@ -144,19 +147,19 @@ export const router = createBrowserRouter([
           </FreeExamPrivateRoute>
         ),
       },
-       {
+      {
         path: "answersheet/exam/:id",
         element: (
           <FreeExamPrivateRoute>
-            <ExamAnswerSheet isUser={false}/>
+            <ExamAnswerSheet isUser={false} />
           </FreeExamPrivateRoute>
         ),
       },
-       {
+      {
         path: "user-answersheet/:userId/exam/:id",
         element: (
           <FreeExamPrivateRoute>
-            <ExamAnswerSheet isUser={true}/>
+            <ExamAnswerSheet isUser={true} />
           </FreeExamPrivateRoute>
         ),
       },
@@ -168,7 +171,7 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-          {
+      {
         path: "admin/examsbypackage/:id",
         element: (
           <FreeExamAdminPrivateRoute>
@@ -176,7 +179,7 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-        {
+      {
         path: "admin/exams",
         element: (
           <FreeExamAdminPrivateRoute>
@@ -184,7 +187,7 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-          {
+      {
         path: "admin/questionbyexam/:id",
         element: (
           <FreeExamAdminPrivateRoute>
@@ -192,7 +195,7 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-            {
+      {
         path: "admin/add-bulk-questions",
         element: (
           <FreeExamAdminPrivateRoute>
@@ -224,7 +227,7 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-          {
+      {
         path: "admin/enrollments/:courseId",
         element: (
           <FreeExamAdminPrivateRoute>
@@ -232,7 +235,7 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-          {
+      {
         path: "admin/modules/:courseId",
         element: (
           <FreeExamAdminPrivateRoute>
@@ -240,18 +243,27 @@ export const router = createBrowserRouter([
           </FreeExamAdminPrivateRoute>
         ),
       },
-          {
+      {
         path: "admin/modules/:courseId",
         element: (
           <FreeExamAdminPrivateRoute>
             <Modules />
           </FreeExamAdminPrivateRoute>
         ),
-      },    {
+      },
+      {
         path: "admin/contents/:moduleId",
         element: (
           <FreeExamAdminPrivateRoute>
             <Contents />
+          </FreeExamAdminPrivateRoute>
+        ),
+      },
+      {
+        path: "admin/quizzes/quiz/:quizId",
+        element: (
+          <FreeExamAdminPrivateRoute>
+            <Quize />
           </FreeExamAdminPrivateRoute>
         ),
       }

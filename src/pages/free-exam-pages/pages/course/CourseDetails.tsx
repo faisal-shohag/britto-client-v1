@@ -101,7 +101,7 @@ const AfterEnrolled = ({course}) => {
     <div className="p-2 mt-3 space-y-2">
       <div className="flex items-center gap-2 "><SiCodeblocks /> <span className="font-bold">টার্গেটস</span></div>
       <Separator/>
-      <div className="">
+      <div className="space-y-2">
         {course.modules.map((module) => {
           return <div key={module.id} className="bg-white dark:bg-zinc-900 border rounded-lg p-2 flex items-center gap-2 cursor-pointer">
             <div>

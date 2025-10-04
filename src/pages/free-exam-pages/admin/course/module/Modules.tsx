@@ -126,9 +126,9 @@ const Modules = () => {
                   {module.contents.map((content) => (
                     <div
                       key={content.id}
-                      className="flex items-center gap-2 mt-1 border py-1 px-2 rounded-xl"
+                      className="flex items-center gap-2 mt-1 border py-1 px-2 rounded-md"
                     >
-                      <div className="h-7 w-7 border rounded-full flex justify-center items-center">
+                      <div className="h-7 w-7 text-xs border rounded-full flex justify-center items-center">
                         {content.order}
                       </div>
                       <div className="font-bold text-sm">

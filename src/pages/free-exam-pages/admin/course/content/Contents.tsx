@@ -4,7 +4,7 @@ import {
   useGetContentByModuleId,
   useUpdateContent,
 } from "@/hooks/course/use-content";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import {
   ChevronRight,
@@ -42,6 +42,8 @@ import { Badge } from "@/components/ui/badge";
 import { contentIcon } from "@/utils/course-utilities";
 import DeleteAlert from "@/pages/free-exam-pages/components/DeleteAlertDialog";
 import MarkdownEditor from "@/pages/free-exam-pages/components/MarkdownEditor";
+import { Separator } from "@/components/ui/separator";
+import { useCreateQuiz, useUpdateQuiz } from "@/hooks/course/use-quiz";
 
 const Contents = () => {
   const { moduleId } = useParams();
@@ -54,7 +56,7 @@ const Contents = () => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
-  const deleteContent = useDeleteContent()
+  const deleteContent = useDeleteContent();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -88,7 +90,7 @@ const Contents = () => {
             <Plus />
           </Button>
         </div>
-        <CardContent>
+        <CardContent className="space-y-2">
           {!contents.length && (
             <div className="text-center text-muted-foreground">
               No contents yet.
@@ -106,6 +108,11 @@ const Contents = () => {
                 </Badge>
               </h2>
               <div className="space-x-3">
+                {
+                  content.type === "QUIZ" && <Link to={`/free/admin/quizzes/quiz/${content.quiz.id}`}>
+                <Button size={'sm'} variant={'outline'} >Manage Quiz</Button>
+                </Link>
+                }
                 <Button
                   onClick={() => {
                     setIsOpenEdit(true);
@@ -117,15 +124,15 @@ const Contents = () => {
                   <Edit2 />
                 </Button>
                 <Button
-                      onClick={() => {
-                        setIsOpenDelete(true);
-                        setCurrentId(module.id);
-                      }}
-                      size={"icon"}
-                      variant={"destructive"}
-                    >
-                      <Trash />
-                    </Button>
+                  onClick={() => {
+                    setIsOpenDelete(true);
+                    setCurrentId(module.id);
+                  }}
+                  size={"icon"}
+                  variant={"destructive"}
+                >
+                  <Trash />
+                </Button>
                 {/* <Link to={`/free/admin/contents/${module.id}`}>
                     <Button size={'icon'}><ArrowRight/></Button>
                     </Link> */}
@@ -155,17 +162,17 @@ const Contents = () => {
           handleDelete={handleDeleteModule}
         />
       )}
-
-            
     </>
   );
 };
 
 const ContentAddDialog = ({ isOpen, setIsOpen, moduleId }) => {
-const [text, setText] = useState("")
-const [selectOption, setSelectOption] = useState('VIDEO')
+  const [text, setText] = useState("");
+  const [selectOption, setSelectOption] = useState("VIDEO");
 
   const createModule = useCreateContent();
+  const createQuiz = useCreateQuiz();
+
   const isModuleCreating = createModule.isPending;
   const onSubmit = (e) => {
     e.preventDefault();
@@ -174,9 +181,8 @@ const [selectOption, setSelectOption] = useState('VIDEO')
       order: Number(e.target.order.value),
       type: e.target.type.value,
       textContent: text,
-      videoUrl: e.target.video.value
+      videoUrl: e?.target?.video?.value || null,
     };
-    console.log(content);
 
     createModule.mutate(
       {
@@ -184,13 +190,22 @@ const [selectOption, setSelectOption] = useState('VIDEO')
         moduleId: Number(moduleId),
       },
       {
-        onSuccess: () => {
+        onSuccess: (data:any) => {
           setIsOpen(false);
+          if (selectOption === "QUIZ") {
+            const quizData = {
+              title: e.target.quiz_title.value,
+              duration: Number(e.target.quiz_duration.value),
+            };
+            createQuiz.mutate({
+              ...quizData,
+              contentId: Number(data.data.data.id),
+            });
+          }
         },
       }
     );
   };
-
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -220,10 +235,14 @@ const [selectOption, setSelectOption] = useState('VIDEO')
                 required
               />
             </div>
-            
+
             <div className="grid gap-3">
               <Label htmlFor="order">Type</Label>
-              <Select onValueChange={(value) => setSelectOption(value)} name="type" defaultValue="VIDEO">
+              <Select
+                onValueChange={(value) => setSelectOption(value)}
+                name="type"
+                defaultValue="VIDEO"
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select content type"></SelectValue>
                 </SelectTrigger>
@@ -244,17 +263,47 @@ const [selectOption, setSelectOption] = useState('VIDEO')
               </Select>
             </div>
 
-            {selectOption === 'VIDEO' && <div className="grid gap-3">
-              <Label htmlFor="video">Video</Label>
-              <Input
-                id="video"
-                name="video"
-                placeholder="Video URL"
-                required
-              />
-            </div>}
+            {selectOption === "VIDEO" && (
+              <div className="grid gap-3">
+                <Label htmlFor="video">Video</Label>
+                <Input
+                  id="video"
+                  name="video"
+                  placeholder="Video URL"
+                  required
+                />
+              </div>
+            )}
 
-            {selectOption === 'TEXT' && <MarkdownEditor text={text} setText={setText} />}
+            {selectOption === "QUIZ" && (
+              <>
+                <div className="grid gap-3">
+                  <Separator />
+
+                  <Label htmlFor="quiz_title">Quiz title</Label>
+                  <Input
+                    id="quiz_title"
+                    name="quiz_title"
+                    placeholder="Quiz title"
+                    required
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="quiz_duration">Duration</Label>
+                  <Input
+                    type="number"
+                    id="quiz_duration"
+                    name="quiz_duration"
+                    placeholder="Quiz duration in minutes"
+                    required
+                  />
+                </div>
+              </>
+            )}
+
+            {selectOption === "TEXT" && (
+              <MarkdownEditor text={text} setText={setText} />
+            )}
           </div>
           <DialogFooter className="mt-5">
             <DialogClose asChild>
@@ -272,9 +321,11 @@ const [selectOption, setSelectOption] = useState('VIDEO')
 };
 
 const ContentEditDialog = ({ isOpen, setIsOpen, currentContent }) => {
-    const [text, setText] = useState(currentContent.textContent || "")
-const [selectOption, setSelectOption] = useState(currentContent.type)
+  const [text, setText] = useState(currentContent.textContent || "");
+  const [selectOption, setSelectOption] = useState(currentContent.type);
+
   const updateContent = useUpdateContent();
+  const updateQuiz    = useUpdateQuiz()
   const isContentUpdating = updateContent.isPending;
   const onSubmit = (e) => {
     e.preventDefault();
@@ -292,6 +343,16 @@ const [selectOption, setSelectOption] = useState(currentContent.type)
       {
         onSuccess: () => {
           setIsOpen(false);
+          if (selectOption === "QUIZ") {
+            const quizData = {
+              title: e.target.quiz_title.value,
+              duration: Number(e.target.quiz_duration.value),
+            };
+            updateQuiz.mutate({
+              data: {...quizData},
+              id: Number(currentContent?.quiz.id),
+            });
+          }
         },
       }
     );
@@ -329,7 +390,11 @@ const [selectOption, setSelectOption] = useState(currentContent.type)
             </div>
             <div className="grid gap-3">
               <Label htmlFor="order">Type</Label>
-              <Select  onValueChange={(value) => setSelectOption(value)} name="type" defaultValue={currentContent.type}>
+              <Select
+                onValueChange={(value) => setSelectOption(value)}
+                name="type"
+                defaultValue={currentContent.type}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select content type"></SelectValue>
                 </SelectTrigger>
@@ -349,17 +414,49 @@ const [selectOption, setSelectOption] = useState(currentContent.type)
                 </SelectContent>
               </Select>
             </div>
-                {selectOption === 'VIDEO' && <div className="grid gap-3">
-              <Label htmlFor="video">Video</Label>
-              <Input
-                id="video"
-                name="video"
-                placeholder="Video URL"
-                required
-              />
-            </div>}
+            {selectOption === "VIDEO" && (
+              <div className="grid gap-3">
+                <Label htmlFor="video">Video</Label>
+                <Input
+                  id="video"
+                  name="video"
+                  placeholder="Video URL"
+                  required
+                />
+              </div>
+            )}
 
-            {selectOption === 'TEXT' && <MarkdownEditor text={text} setText={setText} />}
+              {selectOption === "QUIZ" && (
+              <>
+                <div className="grid gap-3">
+                  <Separator />
+
+                  <Label htmlFor="quiz_title">Quiz title</Label>
+                  <Input
+                  defaultValue={currentContent?.quiz?.title}
+                    id="quiz_title"
+                    name="quiz_title"
+                    placeholder="Quiz title"
+                    required
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="quiz_duration">Duration</Label>
+                  <Input
+                      defaultValue={currentContent?.quiz?.duration}
+                    type="number"
+                    id="quiz_duration"
+                    name="quiz_duration"
+                    placeholder="Quiz duration in minutes"
+                    required
+                  />
+                </div>
+              </>
+            )}
+
+            {selectOption === "TEXT" && (
+              <MarkdownEditor text={text} setText={setText} />
+            )}
           </div>
           <DialogFooter className="mt-5">
             <DialogClose asChild>
