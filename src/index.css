@@ -157,3 +157,7 @@
   }
 }
 
+
+.ytm-custom-control .player-controls-top {
+  display: none !important;
+}

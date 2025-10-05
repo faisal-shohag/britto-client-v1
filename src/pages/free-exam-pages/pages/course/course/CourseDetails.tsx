@@ -16,7 +16,7 @@ const CourseDetails = () => {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  console.log(course);
+  // console.log(course);
 
   if (!course.isEnrolled)
     return <NotEnrolledDetails course={course} userId={user.id} />;
