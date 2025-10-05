@@ -4,6 +4,10 @@
   font-family: "Inter", Noto Serif Bengali;
 }
 
+.mdxeditor-popup-container{
+  z-index: 999999999999999999999;
+}
+
 
 .mdxeditor-toolbar select option{
     z-index: 999999 !important;

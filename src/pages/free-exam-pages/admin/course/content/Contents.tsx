@@ -44,6 +44,7 @@ import DeleteAlert from "@/pages/free-exam-pages/components/DeleteAlertDialog";
 import MarkdownEditor from "@/pages/free-exam-pages/components/MarkdownEditor";
 import { Separator } from "@/components/ui/separator";
 import { useCreateQuiz, useUpdateQuiz } from "@/hooks/course/use-quiz";
+import { FaVideo, FaYoutube } from "react-icons/fa6";
 
 const Contents = () => {
   const { moduleId } = useParams();
@@ -182,6 +183,7 @@ const ContentAddDialog = ({ isOpen, setIsOpen, moduleId }) => {
       type: e.target.type.value,
       textContent: text,
       videoUrl: e?.target?.video?.value || null,
+      videoType: e?.target?.video_type?.value || null,
     };
 
     createModule.mutate(
@@ -264,7 +266,31 @@ const ContentAddDialog = ({ isOpen, setIsOpen, moduleId }) => {
             </div>
 
             {selectOption === "VIDEO" && (
+             <>
+           
               <div className="grid gap-3">
+              <Label htmlFor="order">Video Type</Label>
+              <Select
+                name="type"
+                defaultValue="YOUTUBE"
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select content type"></SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Video type</SelectLabel>
+                    <SelectItem value="YOUTUBE">
+                      <FaYoutube /> Youtube
+                    </SelectItem>
+                    <SelectItem value="CUSTOM">
+                      <FaVideo /> CUSTOM
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+                <div className="grid gap-3">
                 <Label htmlFor="video">Video</Label>
                 <Input
                   id="video"
@@ -273,6 +299,7 @@ const ContentAddDialog = ({ isOpen, setIsOpen, moduleId }) => {
                   required
                 />
               </div>
+             </>
             )}
 
             {selectOption === "QUIZ" && (
@@ -332,8 +359,12 @@ const ContentEditDialog = ({ isOpen, setIsOpen, currentContent }) => {
     const content = {
       title: e.target.title.value,
       order: Number(e.target.order.value),
-      type: e.target.type.value,
+      type: selectOption,
+      videoType: e?.target?.video_type?.value || null,
+      textContent: text,
+      videoUrl: e?.target?.video?.value || null,
     };
+    console.log(content);
 
     updateContent.mutate(
       {
@@ -359,8 +390,8 @@ const ContentEditDialog = ({ isOpen, setIsOpen, currentContent }) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+    <Dialog  open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="md:min-w-1/2 lg:min-w-1/3 max-h-screen overflow-x-hidden overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>Edit Content</DialogTitle>
           <DialogDescription></DialogDescription>
@@ -414,16 +445,42 @@ const ContentEditDialog = ({ isOpen, setIsOpen, currentContent }) => {
                 </SelectContent>
               </Select>
             </div>
-            {selectOption === "VIDEO" && (
+           {selectOption === "VIDEO" && (
+             <>
+           
               <div className="grid gap-3">
-                <Label htmlFor="video">Video</Label>
+              <Label htmlFor="video_type">Video Type</Label>
+              <Select
+                name="video_type"
+                defaultValue={currentContent.videoType}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select content type"></SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Video type</SelectLabel>
+                    <SelectItem value="YOUTUBE">
+                      <FaYoutube /> Youtube
+                    </SelectItem>
+                    <SelectItem value="CUSTOM">
+                      <FaVideo /> CUSTOM
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+                <div className="grid gap-3">
+                <Label htmlFor="video_url">Video</Label>
                 <Input
-                  id="video"
-                  name="video"
+                  id="video_url"
+                  name="video_url"
+                  defaultValue={currentContent.videoUrl}
                   placeholder="Video URL"
                   required
                 />
               </div>
+             </>
             )}
 
               {selectOption === "QUIZ" && (

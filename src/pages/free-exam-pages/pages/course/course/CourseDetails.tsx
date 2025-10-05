@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { useGetCourseById } from "@/hooks/course/use-course";
 import { useEnroll } from "@/hooks/course/use-enroll";
 import useFreeUser from "@/hooks/free-exam-hooks/use-free-user";
-import { useParams } from "react-router";
-import { Spinner } from "../../components/Splash";
+import { Link, useParams } from "react-router";
+import { Spinner } from "../../../components/Splash";
 import { Separator } from "@/components/ui/separator";
 import { SiCodeblocks } from "react-icons/si";
 
@@ -101,9 +101,10 @@ const AfterEnrolled = ({course}) => {
     <div className="p-2 mt-3 space-y-2">
       <div className="flex items-center gap-2 "><SiCodeblocks /> <span className="font-bold">টার্গেটস</span></div>
       <Separator/>
-      <div className="space-y-2">
+      <div className="grid gap-2">
         {course.modules.map((module) => {
-          return <div key={module.id} className="bg-white dark:bg-zinc-900 border rounded-lg p-2 flex items-center gap-2 cursor-pointer">
+          return <Link to={`/free/theater/${module.id}`} key={module.id} >
+          <div className="bg-white dark:bg-zinc-900 border rounded-lg p-2 flex items-center gap-2 cursor-pointer">
             <div>
               <div className="h-9 w-9 border rounded-full flex justify-center items-center">
                 {module.title[0]}
@@ -111,6 +112,7 @@ const AfterEnrolled = ({course}) => {
             </div>
             <div className="font-bold text-sm">{module.title}</div>
           </div>
+          </Link>
         })}
       </div>
     </div>

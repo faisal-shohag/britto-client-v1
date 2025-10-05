@@ -5,12 +5,13 @@ import {
   thematicBreakPlugin,
   markdownShortcutPlugin,
   toolbarPlugin,
+  imagePlugin,
   UndoRedo,
   BoldItalicUnderlineToggles,
   BlockTypeSelect,
   CreateLink,
   ListsToggle,
-  
+  InsertImage,
   MDXEditor,
 } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
@@ -29,6 +30,7 @@ export default function MarkdownEditor({text, setText}) {
         quotePlugin(),
         thematicBreakPlugin(),
         markdownShortcutPlugin(),
+        imagePlugin(),
         toolbarPlugin({
           toolbarContents: () => (
             <>
@@ -37,6 +39,7 @@ export default function MarkdownEditor({text, setText}) {
               <BlockTypeSelect />
               <ListsToggle />
               <CreateLink/>
+              <InsertImage/>
             </>
           )
         })
