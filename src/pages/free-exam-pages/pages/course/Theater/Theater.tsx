@@ -40,7 +40,7 @@ const Theater = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-lg p-2 border">
+      <div className="bg-white dark:bg-zinc-900 rounded-lg p-2 border">
         <div className="space-y-3">
           <div className="min-h-[200px]">
             {contents[currentIndex].type === "VIDEO" && (
