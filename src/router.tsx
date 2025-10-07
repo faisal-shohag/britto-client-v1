@@ -34,6 +34,7 @@ import Modules from "./pages/free-exam-pages/admin/course/module/Modules";
 import Contents from "./pages/free-exam-pages/admin/course/content/Contents";
 import Quize from "./pages/free-exam-pages/admin/course/quiz/Quize";
 import Theater from "./pages/free-exam-pages/pages/course/Theater/Theater";
+import QuizPlay from "./pages/free-exam-pages/pages/course/quiz/QuizPlay";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +90,14 @@ export const router = createBrowserRouter([
         element: (
           <FreeExamPrivateRoute>
             <Theater />
+          </FreeExamPrivateRoute>
+        ),
+      },
+      {
+        path: "quiz/:quizId",
+        element: (
+          <FreeExamPrivateRoute>
+            <QuizPlay />
           </FreeExamPrivateRoute>
         ),
       },

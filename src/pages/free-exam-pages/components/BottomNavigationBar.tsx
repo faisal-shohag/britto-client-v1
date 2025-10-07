@@ -1,22 +1,33 @@
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { TbTarget, TbTargetArrow } from "react-icons/tb";
-import {FaCircleUser, FaRegCircleUser,    } from "react-icons/fa6";
+import { FaCircleUser, FaRegCircleUser } from "react-icons/fa6";
 import { NavLink, useLocation } from "react-router";
 import { SiSparkpost } from "react-icons/si";
 
 const BottomNavigationBar = () => {
   const location = useLocation();
 
-  const baseClasses = "flex flex-col justify-center items-center gap-1 px-3 py-1";
+  const baseClasses =
+    "flex flex-col justify-center items-center gap-1 px-3 py-1";
   const activeClasses = "text-red-500 font-semibold"; // Active Highlight
   const inactiveClasses = "text-gray-600 dark:text-gray-400"; // Inactive
 
   const navData = [
     { path: "/free", title: "Home", icon: GoHome, activeIcon: GoHomeFill },
     { path: "rank", title: "Rank", icon: TbTarget, activeIcon: TbTargetArrow },
-       { path: "ask", title: "সবজান্তা", icon: SiSparkpost, activeIcon: SiSparkpost },
- 
-    { path: "profile", title: "Profile", icon: FaRegCircleUser, activeIcon: FaCircleUser  },
+    {
+      path: "ask",
+      title: "সবজান্তা",
+      icon: SiSparkpost,
+      activeIcon: SiSparkpost,
+    },
+
+    {
+      path: "profile",
+      title: "Profile",
+      icon: FaRegCircleUser,
+      activeIcon: FaCircleUser,
+    },
   ];
 
   return (
@@ -27,7 +38,9 @@ const BottomNavigationBar = () => {
           <NavLink
             key={path}
             to={path}
-            className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
+            className={`${baseClasses} ${
+              isActive ? activeClasses : inactiveClasses
+            }`}
           >
             {isActive ? <ActiveIcon size={20} /> : <Icon size={20} />}
             <div>{title}</div>
